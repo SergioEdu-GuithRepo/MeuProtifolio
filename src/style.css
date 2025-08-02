@@ -1,0 +1,1591 @@
+/* style.css - ARQUIVO DE ESTILO ÚNICO E FINAL */
+
+/* --- Variáveis e Configurações Globais --- */
+:root {
+    --primary-color: #ffffff;
+    --secondary-color: #aaaaaa;
+    --background-color: #121212;
+    --accent-color: #9EFF00;
+    --cta-color: #9EFF00;
+    /* NOVA COR: para botões e ícones de contato */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+    cursor: none;
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 700;
+    /* Peso "bold" padrão para títulos */
+}
+
+.gradient-text {
+    background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+    /* Peso extra-bold para destaque */
+}
+
+.menu-toggle {
+    /* ... (estilos existentes) ... */
+    font-size: 1.2rem;
+    /* Aumenta o tamanho do ícone */
+    width: 45px;
+    /* Define uma largura quadrada */
+    height: 45px;
+    /* Define uma altura quadrada */
+    padding: 0;
+    /* Remove o padding para centralizar o ícone */
+    display: flex;
+    /* Usa flexbox para centralizar */
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- Componentes Globais --- */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-logo {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(0.95);
+    }
+}
+
+.custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, mix-blend-mode 0.3s ease;
+    z-index: 10000;
+    mix-blend-mode: difference;
+}
+
+a:hover~.custom-cursor,
+button:hover~.custom-cursor {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 25px 5%;
+    transition: background-color 0.3s ease, color 0.3s ease, backdrop-filter 0.3s ease, border-bottom-color 0.3s ease;
+
+    /* Estado inicial (transparente, sem blur) */
+    background-color: transparent;
+    backdrop-filter: blur(0px);
+    border-bottom: 1px solid transparent;
+    /* Borda inicial transparente */
+}
+
+header.scrolled {
+    /* Estado "ativo" com efeito vidro fosco */
+    /* Fundo escuro com 80% de opacidade. Ajuste o valor 0.8 como desejar */
+    background-color: rgba(18, 18, 18, 0.8);
+
+    /* O efeito de blur. 10px é um bom valor, mas pode ser ajustado */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Para compatibilidade com Safari */
+
+    /* Borda inferior sutil para separação */
+    border-bottom-color: rgba(60, 60, 60, 0.5);
+    /* Cor da borda, também com transparência */
+
+    /* A regra de 'box-shadow' do estilo antigo pode ser removida ou mantida se preferir */
+    /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    letter-spacing: 2px;
+    /* A cor do logo não precisa mais mudar no scroll, pois o fundo sempre terá contraste */
+}
+
+
+.menu-toggle {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1002;
+    transition: all 0.3s ease;
+    width: 80px;
+    text-align: center;
+}
+
+.fullscreen-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.9);
+    backdrop-filter: blur(10px);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.fullscreen-menu.is-active {
+    right: 0;
+}
+
+.fullscreen-menu nav {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.fullscreen-menu nav a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+    font-weight: 600;
+    margin: 15px 0;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.fullscreen-menu.is-active nav a {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: calc(0.3s + 0.1s * var(--i));
+}
+
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 999;
+}
+
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.site-footer {
+    /* --- EFEITO GLASSMORPHISM --- */
+    /* Fundo escuro com 80% de opacidade, igual ao header */
+    background-color: rgba(18, 18, 18, 0.8);
+
+    /* O efeito de blur */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    /* --- POSICIONAMENTO STICKY --- */
+    /*position: sticky;
+    bottom: 0;  Gruda na parte inferior da tela */
+    /*z-index: 998;  Garante que fique acima do conteúdo, mas abaixo do header se necessário */
+
+    /* --- ESTILOS VISUAIS --- */
+    color: var(--secondary-color);
+    padding: 60px 5%;
+
+    /* Trocamos a borda superior para ter o mesmo efeito do header */
+    border-top: 1px solid rgba(60, 60, 60, 0.5);
+
+    /* A transição não é tão necessária aqui, mas podemos manter por consistência */
+    transition: all 0.3s ease;
+}
+
+.footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.site-footer h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    color: #fff;
+}
+
+.footer-social .social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: #ffff;
+    font-size: 1.5rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.footer-email {
+    color: var(--primary-color);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.newsletter-form {
+    display: flex;
+    border: 1px solid #444;
+    border-radius: 5px;
+    overflow: hidden;
+    max-width: 350px;
+}
+
+.newsletter-form input {
+    flex-grow: 1;
+    background: none;
+    border: none;
+    padding: 15px;
+    color: #fff;
+    font-family: 'Poppins';
+}
+
+.newsletter-form button {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    color: #000;
+    font-size: 1.2rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    font-size: 0.9rem;
+}
+
+/* --- Estilos da Página Inicial --- */
+#hero {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 1;
+}
+
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-slide.active-slide {
+    opacity: 1;
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content h1,
+.hero-content h2,
+.hero-content p,
+.hero-content .btn-contact {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
+}
+
+.hero-slide.active-slide .hero-content h1,
+.hero-slide.active-slide .hero-content h2,
+.hero-slide.active-slide .hero-content p,
+.hero-slide.active-slide .hero-content .btn-contact {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-content h2 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-content h1 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 4px;
+}
+
+.hero-content p {
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+    font-size: 1.1rem;
+    color: var(--secondary-color);
+    line-height: 1.6;
+}
+
+.btn-contact {
+    padding: 12px 28px;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-contact:hover {
+    background: var(--primary-color);
+    color: var(--background-color);
+}
+
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    /* Bordas mais arredondadas */
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+}
+
+.btn-primary {
+    color: var(--background-color);
+    background-image: linear-gradient(to right, #9EFF00, #67a504);
+    /* Gradiente Roxo/Azul */
+    border-color: transparent;
+    /*     box-shadow: 0 0 15px rgba(138, 43, 226, 0.4); /* Brilho sutil */
+}
+
+
+/* Botão Secundário (estilo "ghost") */
+.btn-secondary {
+    color: var(--primary-color);
+    background-color: rgba(60, 60, 60, 0.4);
+    /* Fundo semi-transparente */
+    border-color: rgba(80, 80, 80, 1);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(80, 80, 80, 0.6);
+    border-color: rgba(100, 100, 100, 1);
+    transform: translateY(-2px);
+}
+
+#about {
+    background-color: #1a1a1a;
+    padding: 120px 5%;
+}
+
+.about-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    align-items: center;
+    gap: 60px;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+#portfolio {
+    padding: 80px 8%;
+}
+
+.portfolio-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.filter-buttons {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.filter-btn {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin: 0 15px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+}
+
+.filter-btn:hover {
+    color: var(--primary-color);
+}
+
+.filter-btn.active {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.gallery {
+    column-count: 1;
+    column-gap: 20px;
+}
+
+.gallery-item {
+    break-inside: avoid;
+    margin-bottom: 20px;
+    position: relative;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-item-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.gallery-item-title {
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 0 10px;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.gallery-item:hover .gallery-item-overlay {
+    opacity: 1;
+}
+
+.gallery-item:hover .gallery-item-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Estilos da Página de Projeto --- */
+.page-container {
+    padding-top: 150px;
+    padding-bottom: 80px;
+    padding-top: 150px;
+    padding-bottom: 80px;
+}
+
+#project-display-container {
+    max-width: 900px;
+    margin: 18% auto;
+    padding: 0 5%;
+}
+
+#project-display-container h1 {
+    font-size: clamp(2.5rem, 7vw, 3.5rem);
+}
+
+.project-main-category {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.coverflow-carousel {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.carousel-stage {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    margin-bottom: 20px;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+    cursor: pointer;
+}
+
+.carousel-slide img {
+    width: auto;
+    max-width: 80%;
+    max-height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-slide.active {
+    transform: translateZ(0);
+    opacity: 1;
+    z-index: 10;
+}
+
+.carousel-slide.prev {
+    transform: translateX(-50%) translateZ(-300px) rotateY(45deg);
+    opacity: 0.4;
+    z-index: 5;
+}
+
+.carousel-slide.next {
+    transform: translateX(50%) translateZ(-300px) rotateY(-45deg);
+    opacity: 0.4;
+    z-index: 5;
+}
+
+.carousel-slide:not(.active):not(.prev):not(.next) {
+    transform: scale(0);
+    opacity: 0;
+}
+
+.carousel-navigation {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #444;
+    border: none;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-dot.active {
+    background-color: var( --cta-color);
+}
+
+.project-details {
+    margin-top: 60px;
+    border-top: 1px solid #333;
+    padding-top: 40px;
+}
+
+.detail-section {
+    margin-bottom: 40px;
+}
+
+.detail-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.detail-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--secondary-color);
+}
+
+/* --- Estilos da Página de Contato --- */
+
+.contact-hero {
+    position: relative;
+    height: 40vh;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.contact-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 18, 18, 0.7);
+    /* Overlay mais escuro */
+}
+
+.contact-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-hero h1 {
+    font-size: clamp(2.8rem, 8vw, 4rem);
+    font-weight: 700;
+}
+
+.contact-hero .breadcrumbs {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-top: 10px;
+}
+
+.contact-hero .breadcrumbs a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-hero .breadcrumbs a:hover {
+    color: var(--accent-color);
+}
+
+/* Layout principal da página de contato */
+.contact-page.page-container {
+    padding-top: 80px;
+    /* Reduz padding superior já que temos o hero */
+    padding-bottom: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+    padding: 0 5%;
+}
+
+/* Lado Esquerdo: Formulário */
+.contact-form-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.contact-form-container p {
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+    line-height: 1.7;
+    max-width: 600px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-form label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: -15px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(158, 255, 0, 0.2);
+}
+
+.btn-submit {
+    background-image: linear-gradient(to right, #9EFF00, #67a504);
+    color: var(--background-color);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    align-self: flex-start;
+}
+
+.btn-submit:hover {
+    background-color: #e04a2d;
+    transform: translateY(-2px);
+}
+
+/* Lado Direito: Informações */
+.contact-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-block {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-block i {
+    font-size: 2.5rem;
+    color: var(--cta-color);
+    margin-bottom: 20px;
+}
+
+.info-block h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.info-block p,
+.info-block a {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-decoration: none;
+}
+
+.info-block a:hover {
+    color: var(--accent-color);
+}
+
+/* Seção do Mapa */
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.contact-hero {
+    position: relative;
+    height: 40vh;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.contact-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(18, 18, 18, 0.7);
+    /* Overlay mais escuro */
+}
+
+.contact-hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-hero h1 {
+    font-size: clamp(2.8rem, 8vw, 4rem);
+    font-weight: 700;
+}
+
+.contact-hero .breadcrumbs {
+    font-size: 1rem;
+    color: var(--secondary-color);
+    margin-top: 10px;
+}
+
+.contact-hero .breadcrumbs a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-hero .breadcrumbs a:hover {
+    color: var(--accent-color);
+}
+
+/* Layout principal da página de contato */
+.contact-page.page-container {
+    padding-top: 80px;
+    /* Reduz padding superior já que temos o hero */
+    padding-bottom: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+    padding: 0 5%;
+}
+
+/* Lado Esquerdo: Formulário */
+.contact-form-container h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.contact-form-container p {
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+    line-height: 1.7;
+    max-width: 600px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.contact-form label {
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+    margin-bottom: -15px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: 15px;
+    color: var(--primary-color);
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(158, 255, 0, 0.2);
+}
+
+.btn-submit {
+    background-color: var(--cta-color);
+    color: var(--background-color);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    align-self: flex-start;
+}
+
+.btn-submit:hover {
+    background-color: #e04a2d;
+    transform: translateY(-2px);
+}
+
+/* Lado Direito: Informações */
+.contact-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.info-block {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.info-block i {
+    font-size: 2.5rem;
+    color: var(--cta-color);
+    margin-bottom: 20px;
+}
+
+.info-block h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.info-block p,
+.info-block a {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    text-decoration: none;
+}
+
+.info-block a:hover {
+    color: var(--accent-color);
+}
+
+/* Seção do Mapa */
+.map-container {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+
+.info-item h3 {
+    margin-bottom: 15px;
+}
+
+.info-item a {
+    color: var(--primary-color);
+}
+
+
+.menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    /* Fica atrás da navegação */
+}
+
+/* style.css */
+
+/* Hover no Menu em Tela Cheia */
+.fullscreen-menu nav a:hover {
+    color: var(--accent-color);
+}
+
+/* Hover nos Filtros da Galeria */
+.filter-btn:hover {
+    color: var(--accent-color);
+}
+
+/* style.css */
+
+/* Cor de destaque no Logo */
+.logo:hover {
+    color: var(--accent-color);
+    transition: color 0.3s ease;
+}
+
+/* Cor do logo quando o menu está com fundo branco */
+header.scrolled .logo:hover {
+    color: var(--accent-color);
+    /* Pode ajustar para um cinza escuro se preferir */
+}
+
+/* Cor de destaque no botão de Menu */
+.menu-toggle:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--background-color);
+}
+
+/* Cor do botão quando o menu está com fundo branco */
+header.scrolled .menu-toggle:hover {
+    background-color: var(--background-color);
+    border-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+/* style.css */
+
+/* --- Estilos para o Botão de Fechar do Menu --- */
+
+.close-menu-btn {
+    position: absolute;
+    top: 30px;
+    right: 5%;
+    /* Alinha com o espaçamento geral do site */
+    background: none;
+    border: 1px solid var(--secondary-color);
+    color: var(--secondary-color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.close-menu-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--background-color);
+    border-color: var(--accent-color);
+    transform: rotate(90deg);
+    /* Efeito de rotação sutil no hover */
+}
+
+.form-success-message {
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    background-color: rgba(158, 255, 0, 0.05);
+}
+
+.form-success-message h3 {
+    color: var(--accent-color);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.form-error-message {
+    color: #ff6b6b;
+    margin-top: 15px;
+}
+
+/* Spinner de carregamento para o botão */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estilo para botão desabilitado */
+.btn[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.image-loader-container {
+    position: relative;
+    /* Essencial para posicionar a imagem e o esqueleto */
+    overflow: hidden;
+    /* Garante que os cantos fiquem nítidos */
+    width: 100%;
+    height: 100%;
+    /*   background-color: #2a2a2a; /* Cor de fundo enquanto tudo carrega */
+}
+
+.skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*   background-color: #2a2a2a;
+ */
+    border-radius: 8px;
+    /* O mesmo que o seu gallery-item */
+    opacity: 1;
+    /* transition: opacity 0.4s ease-out;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; */
+}
+
+.gallery-item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+
+    /* ADICIONE ESTA LINHA */
+    /*   aspect-ratio: 4 / 3; /* Proporção de 4:3. Ajuste se suas imagens tiverem outra proporção. */
+
+    /* Garante que o fundo seja escuro enquanto o ImageLoader trabalha */
+    /*   background-color: #1c1c1c; 
+ */
+}
+
+.gallery-item-skeleton {
+    width: 100%;
+    /* Mantém a proporção da imagem (ex: 4:3) */
+    padding-top: 75%;
+    position: relative;
+    /*     background-color: #2a2a2a;
+ */
+    border-radius: 8px;
+    /* animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; */
+}
+
+/* A animação 'pulse' já deve existir no seu CSS */
+/* @keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .6;
+    }
+} */
+/* --- SEÇÃO DE RESPONSIVIDADE FINAL --- */
+
+@media (max-width: 992px) {
+    .contact-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .info-block {
+        flex: 1 1 250px;
+    }
+}
+
+/* --- Breakpoint Principal para Celulares (<= 768px) --- */
+@media (max-width: 768px) {
+
+    /* === GERAL === */
+    body {
+        cursor: default;
+    }
+
+    .custom-cursor {
+        display: none;
+    }
+
+    /* === BOTÕES === */
+    .btn {
+        padding: 16px 24px;
+        font-size: 1.1rem;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    /* === HEADER E NAVEGAÇÃO === */
+    header {
+        padding: 20px 5%;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .menu-toggle {
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        font-size: 0.9rem;
+    }
+
+    .social-icons-header {
+        display: none;
+    }
+
+    .fullscreen-menu {
+        max-width: 100vw;
+    }
+
+    .fullscreen-menu nav a {
+        margin: 10px 0;
+    }
+
+    .close-menu-btn {
+        top: 20px;
+        right: 5%;
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+
+    /* === SEÇÕES PRINCIPAIS === */
+    #about,
+    #portfolio {
+        padding: 80px 8%;
+    }
+
+    /* === HERO === */
+    .hero-slide::before {
+        background: rgba(0, 0, 0, 0.65);
+    }
+
+    .hero-content {
+        width: 90%;
+    }
+
+    .hero-content h1,
+    .hero-content h2 {
+        font-size: clamp(2rem, 10vw, 2.8rem);
+        line-height: 1.2;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+
+    .hero-btn-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+    }
+
+    /* === ABOUT === */
+    .about-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: left;
+    }
+
+    .about-image img {
+        margin: 0 auto;
+        display: block;
+        max-width: 280px;
+    }
+
+    .about-text h2 {
+        font-size: 2rem;
+    }
+
+    .about-text .btn {
+        width: auto;
+        display: inline-block;
+    }
+
+    /* === PORTFOLIO (GALERIA) === */
+    #portfolio {
+        padding: 80px 8%;
+    }
+
+    .gallery {
+        column-count: 1;
+        column-gap: 0;
+    }
+
+    .gallery-item {
+        margin-bottom: 20px;
+    }
+
+    /* === PÁGINA DE PROJETO (CARROSSEL) === */
+    #project-display-container {
+        margin-top: 120px;
+    }
+
+    .carousel-stage {
+        height: 300px;
+        perspective: none;
+    }
+
+    .carousel-slide.prev,
+    .carousel-slide.next {
+        transform: translateX(0) scale(0);
+        opacity: 0;
+    }
+
+    .carousel-slide img {
+        max-width: 95%;
+    }
+
+    /* === FOOTER === */
+    .footer-container {
+        display: block;
+        gap: 0;
+        margin-bottom: 0;
+    }
+
+    .footer-about,
+    .footer-social,
+    .footer-contact {
+        text-align: left;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid rgba(60, 60, 60, 0.5);
+    }
+
+    .footer-contact {
+        margin-bottom: 0;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .footer-social .social-icons,
+    .newsletter-form {
+        justify-content: flex-start;
+    }
+
+    .newsletter-form {
+        max-width: 350px;
+        margin: 0;
+    }
+
+    .social-icons a {
+        font-size: 1.8rem;
+        padding: 10px;
+    }
+
+    .footer-bottom {
+        padding-top: 30px;
+    }
+}
+
+/* --- Breakpoint para Galeria de 2 Colunas --- */
+@media (min-width: 769px) and (max-width: 1200px) {
+    .gallery {
+        column-count: 2;
+    }
+}
+
+/* --- Breakpoint para Galeria de 3 Colunas --- */
+@media (min-width: 1201px) {
+    .gallery {
+        column-count: 3;
+    }
+}
+
+/* --- SEÇÃO DE RESPONSIVIDADE APRIMORADA --- */
+
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    /* Alinha o logo e o menu nas extremidades */
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* NOVO: Estilos para os ícones sociais no header */
+.social-icons-header {
+    display: flex;
+    gap: 25px;
+    /* Espaçamento entre os ícones */
+
+    /* Centraliza os ícones no espaço disponível.
+       Isto funciona porque o logo e o menu são empurrados para as bordas pelo 'justify-content: space-between' no pai. */
+}
+
+.social-icons-header a {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    /* Tamanho um pouco mais sutil que no footer */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icons-header a:hover {
+    color: var(--accent-color);
+}
+
+.masonry-grid {
+    display: flex;
+    margin-left: -20px;
+    /* Espaçamento entre colunas */
+    width: auto;
+}
+
+.masonry-column {
+    background-clip: padding-box;
+}
+
+.gallery-item {
+    margin-bottom: 20px;
+    break-inside: avoid;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: left;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+  }
+
+  .social-icons {
+    margin-top: 10px;
+  }
+}
