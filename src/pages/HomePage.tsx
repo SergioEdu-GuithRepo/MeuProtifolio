@@ -142,15 +142,27 @@ const HomePage: React.FC = () => {
                             <motion.a href="#portfolio" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
                         </div>
                     </div>
+                    <motion.a href="#portfolio" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
+
                 </section>
 
                 <section id="about" ref={aboutSectionRef}>
                     <div className="about-container">
-                        <FadeIn className="about-image" ><img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="Sua foto profissional" /></FadeIn>
+                        <FadeIn className="about-image" ><img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="foto" /></FadeIn>
                         <FadeIn className="about-text" >
-                            <h2>Designer, Estrategista e Solucionador de Problemas.</h2>
-                            <p>Com mais de 10 anos de experiência, ajudo marcas a se destacarem através de um design que não é apenas bonito, mas também inteligente e funcional.</p>
-                            <p><strong>Minhas especialidades:</strong> Direção de Arte, Branding, Web Design e Estratégia de Marca.</p>
+                            <h2>Olá, me chamo Sérgio Eduardo, Diretor de Arte e Designer Gráfico.</h2>
+                            <br></br>
+                            <p>Desde cedo, descobri no design uma forma de expressão e impacto. O que começou como curiosidade virou
+                                vocação — e, ao longo dos anos, fui lapidando meu olhar criativo, aprofundando técnicas e desenvolvendo uma visão
+                                estratégica para comunicar com propósito.</p>
+                            <br></br>
+                            <p>Sou formado em Engenharia Informática pela Universidade Metodista de Angola, mas foi no universo visual que encontrei minha
+                                verdadeira paixão. Desde então, venho construindo uma jornada que une arte, função e emoção.</p>
+                            <p>
+                                <br></br>
+                                Já colaborei com marcas como a <strong>Universidade Metodista</strong>, <strong>Escola da Missão Metodista</strong> e a gigante das telecomunicações <strong>UNITEL</strong>,
+                                contribuindo com projetos que vão desde identidade visual até campanhas digitais.
+                            </p>
                             <div style={{ marginTop: '30px' }}>
                                 <motion.a href="/contato" className="btn btn-primary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 1.5 }}>Vamos Bater Um Papo?</motion.a>
                             </div>

@@ -9,10 +9,10 @@ const Footer: React.FC = () => {
             <div className="footer-container">
                 <FadeIn className="footer-about">
                     <h3>Fiigura</h3>
-                    <p>Design estratégico e direção criativa para marcas com propósito.</p>
+                    <p>Design E Direção Criativa Para Marcas.</p>
                 </FadeIn>
                 <FadeIn className="footer-social">
-                    <h3>Siga-me</h3>
+                    <h3>Minhas Redes sociais</h3>
                     <div className="social-icons">
                         <a href="#" target="_blank" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
                         <a href="#" target="_blank" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
                 </FadeIn>
                 <FadeIn className="footer-contact">
                     <h3>Contato</h3>
-                    <a href="mailto:seuemail@exemplo.com" className="footer-email">seuemail@exemplo.com</a>
+                    <a href="mailto:seuemail@exemplo.com" className="footer-email">sergiokuroko2@gmail.com</a>
                     <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
                         <input type="email" placeholder="Subscreva. Insira o seu e-mail..." />
                         <button type="submit" aria-label="Subscrever"><i className="fas fa-envelope"></i></button>
@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                 </FadeIn>
             </div>
             <FadeIn className="footer-bottom">
-                <p>© 2023 [Seu Nome]. Todos os direitos reservados.</p>
+                <p>© 2025 <strong>Sérgio Eduardo</strong>. Todos os direitos reservados.</p>
             </FadeIn>
         </footer>
     );

@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
+import CustomCursor from './CustomCursor'; // Importe o novo componente
+
 
 const Layout: React.FC = () => {
     const location = useLocation();
@@ -71,7 +73,7 @@ const Layout: React.FC = () => {
             <Footer />
 
             <a href="#" id="back-to-top" aria-label="Voltar ao topo"><i className="fas fa-arrow-up"></i></a>
-            <div className="custom-cursor"></div>
+             <CustomCursor />
         </>
     );
 };

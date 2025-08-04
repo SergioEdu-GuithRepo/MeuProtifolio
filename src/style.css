@@ -113,13 +113,15 @@ h3 {
 
 .custom-cursor {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 20px;
     height: 20px;
     border: 2px solid #fff;
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, mix-blend-mode 0.3s ease;
+    /* transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, mix-blend-mode 0.3s ease; */
     z-index: 10000;
     mix-blend-mode: difference;
 }
@@ -522,8 +524,20 @@ header.scrolled {
     gap: 60px;
 }
 
-.about-image img {
+.carousel-stage {
+    position: relative;
     width: 100%;
+    height: 500px;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    margin-bottom: 20px;
+    cursor: grab;
+    user-select: none;
+
+}
+
+.about-image img {
+    width: 75%;
     border-radius: 8px;
 }
 
@@ -686,8 +700,10 @@ header.scrolled {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease;
     cursor: pointer;
+    will-change: transform, opacity;
+
 }
 
 .carousel-slide img {
@@ -696,28 +712,38 @@ header.scrolled {
     max-height: 100%;
     border-radius: 8px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
 }
 
 .carousel-slide.active {
-    transform: translateZ(0);
+    transform: translateX(0) scale(1);
     opacity: 1;
     z-index: 10;
 }
 
 .carousel-slide.prev {
+    /*     transform: translateX(-40%) scale(0.7);
+ */
     transform: translateX(-50%) translateZ(-300px) rotateY(45deg);
+
     opacity: 0.4;
     z-index: 5;
 }
 
 .carousel-slide.next {
+    /*     transf */
+    orm: translateX(40%) scale(0.7);
+    /*  */
     transform: translateX(50%) translateZ(-300px) rotateY(-45deg);
+
     opacity: 0.4;
     z-index: 5;
 }
 
 .carousel-slide:not(.active):not(.prev):not(.next) {
-    transform: scale(0);
+    transform: scale(0.5);
+    /*     transform: scale(0);
+ */
     opacity: 0;
 }
 
@@ -740,7 +766,7 @@ header.scrolled {
 }
 
 .carousel-dot.active {
-    background-color: var( --cta-color);
+    background-color: var(--cta-color);
 }
 
 .project-details {
@@ -1518,10 +1544,6 @@ header.scrolled .menu-toggle:hover {
     }
 }
 
-/* --- SEÇÃO DE RESPONSIVIDADE APRIMORADA --- */
-
-
-
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -1569,23 +1591,87 @@ header.scrolled .menu-toggle:hover {
 }
 
 @media (max-width: 768px) {
-  .footer-container {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: left;
-  }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: left;
+    }
 
-  .newsletter-form {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+    .newsletter-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
-  .newsletter-form input,
-  .newsletter-form button {
-    width: 100%;
-  }
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
+    }
 
-  .social-icons {
-    margin-top: 10px;
-  }
+    .social-icons {
+        margin-top: 10px;
+    }
+}
+
+.trail-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    /* Pontos sólidos, mas com opacidade */
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    /* Fica atrás do cursor principal */
+    mix-blend-mode: difference;
+
+    /* A opacidade diminui para cada ponto, criando o efeito de "fade" */
+    opacity: 0.5;
+}
+
+.custom-cursor-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+
+    /* ADICIONE/GARANTA ESTA LINHA para centralizar o cursor */
+    transform: translate(-50%, -50%);
+}
+
+.custom-cursor-trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(153, 254, 162, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    mix-blend-mode: difference;
+
+    /* ADICIONE/GARANTA ESTA LINHA para centralizar o rastro */
+    transform: translate(-50%, -50%);
+}
+
+/* Efeito de hover: podemos fazê-lo no Framer Motion, mas manter no CSS é mais simples */
+a:hover~.custom-cursor-main,
+button:hover~.custom-cursor-main {
+    /* Opcional: pode mudar de cor ou desaparecer no hover */
+    background-color: white;
+}
+
+a:hover~.custom-cursor-trail,
+button:hover~.custom-cursor-trail {
+    /* Faz o rastro crescer para criar o efeito de "bolha" */
+    transform: scale(1.5);
+    background-color: rgba(255, 255, 255, 0.4);
 }
