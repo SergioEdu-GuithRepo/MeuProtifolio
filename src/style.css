@@ -7,7 +7,16 @@
     --background-color: #121212;
     --accent-color: #9EFF00;
     --cta-color: #9EFF00;
-    /* NOVA COR: para botões e ícones de contato */
+}
+
+:root {
+    --color-background: #121212;
+    --color-background-secondary: #1a1a1a;
+    --color-text: #ffffff;
+    --color-text-secondary: #aaaaaa;
+    --color-border: rgba(60, 60, 60, 0.5);
+    --color-accent: #9EFF00;
+    --color-glass-bg: rgba(18, 18, 18, 0.8);
 }
 
 html {
@@ -27,6 +36,16 @@ body {
     opacity: 1;
     transition: opacity 0.4s ease-in-out;
     cursor: none;
+}
+
+body.light-mode {
+    --color-background: #f0f3f5;
+    --color-background-secondary: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #555555;
+    --color-border: rgba(200, 200, 200, 0.8);
+    --color-accent: #9EFF00; /* Um azul vibrante para o modo claro */
+    --color-glass-bg: rgba(255, 255, 255, 0.7);
 }
 
 body.fade-out {
@@ -731,9 +750,6 @@ header.scrolled {
 }
 
 .carousel-slide.next {
-    /*     transf */
-    orm: translateX(40%) scale(0.7);
-    /*  */
     transform: translateX(50%) translateZ(-300px) rotateY(-45deg);
 
     opacity: 0.4;
@@ -1675,3 +1691,4 @@ button:hover~.custom-cursor-trail {
     transform: scale(1.5);
     background-color: rgba(255, 255, 255, 0.4);
 }
+
