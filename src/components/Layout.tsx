@@ -8,6 +8,7 @@ import ThemeToggleButton from './ThemeToggleButton'; // Importe o botão
 
 
 
+
 const Layout: React.FC = () => {
     const location = useLocation();
 
@@ -58,6 +59,8 @@ const Layout: React.FC = () => {
             };
         }
     }, []);
+
+    
 
     return (
         <>

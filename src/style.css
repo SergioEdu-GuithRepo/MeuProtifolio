@@ -130,6 +130,7 @@ h3 {
     }
 }
 
+
 .custom-cursor {
     position: fixed;
     top: 0;
@@ -1646,7 +1647,50 @@ header.scrolled .menu-toggle:hover {
     opacity: 0.5;
 }
 
+
+.custom-cursor-main,
+.custom-cursor-trail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    mix-blend-mode: difference;
+}
+
 .custom-cursor-main {
+    width: 20px;
+    height: 20px;
+    border: 2px solid white;
+    border-radius: 50%;
+    z-index: 10000;
+}
+
+.custom-cursor-trail {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(153, 254, 162, 0.2);
+    border-radius: 50%;
+    z-index: 9999;
+}
+
+[data-cursor-magnetic] {
+    position: relative; /* Necessário para o z-index funcionar */
+    z-index: 2;         /* Garante que o elemento fique NA FRENTE do cursor magnético */
+}
+
+/* Opcional: Melhora a aparência do cursor de texto */
+.custom-cursor-main {
+    /* ... */
+    background-color: transparent; /* Garante que não tenha fundo por padrão */
+}
+
+/* Quando em modo texto, o cursor principal se torna uma barra sólida */
+body:has([data-cursor-variant="text"]) .custom-cursor-main {
+    background-color: var(--accent-color);
+    border-color: transparent;
+}
+
+/* .custom-cursor-main {
     position: fixed;
     top: 0;
     left: 0;
@@ -1657,8 +1701,6 @@ header.scrolled .menu-toggle:hover {
     pointer-events: none;
     z-index: 10000;
     mix-blend-mode: difference;
-
-    /* ADICIONE/GARANTA ESTA LINHA para centralizar o cursor */
     transform: translate(-50%, -50%);
 }
 
@@ -1673,10 +1715,8 @@ header.scrolled .menu-toggle:hover {
     pointer-events: none;
     z-index: 10000;
     mix-blend-mode: difference;
-
-    /* ADICIONE/GARANTA ESTA LINHA para centralizar o rastro */
     transform: translate(-50%, -50%);
-}
+} */
 
 /* Efeito de hover: podemos fazê-lo no Framer Motion, mas manter no CSS é mais simples */
 a:hover~.custom-cursor-main,

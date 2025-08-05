@@ -16,6 +16,8 @@ import { type ProjectCategory } from '../types/data';
 
 import Masonry from 'react-masonry-css';
 
+const MotionLink = motion(Link);
+
 
 // --- Tipagem para os dados ---
 interface SanityProject {
@@ -128,7 +130,7 @@ const HomePage: React.FC = () => {
                             <h1 className="gradient-text">DESIGN ESTRATÉGICO</h1>
                             <h2 style={{ color: 'white', fontWeight: 700 }}>DIREÇÃO CRIATIVA</h2>
                             <p>Transformando ideias em experiências visuais memoráveis.</p>
-                            <motion.a href="#portfolio" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
+                            <motion.a href="#portfolio" className="btn btn-secondary" data-cursor-magnetic whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
                             {/* <motion.a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                     <i className="fab fa-github" style={{marginRight: '8px'}}></i>GitHub
                             </motion.a> */}
@@ -139,7 +141,7 @@ const HomePage: React.FC = () => {
                             <h1 className="gradient-text">CONSTRUINDO MARCAS</h1>
                             <h2 style={{ color: 'white', fontWeight: 700 }}>CONTANDO HISTÓRIAS</h2>
                             <p>De branding a campanhas digitais, meu foco é criar soluções criativas com propósito.</p>
-                            <motion.a href="#portfolio" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
+                            <motion.a href="#portfolio" className="btn btn-secondary"  data-cursor-magnetic whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
                         </div>
                     </div>
                     <motion.a href="#portfolio" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
@@ -164,7 +166,15 @@ const HomePage: React.FC = () => {
                                 contribuindo com projetos que vão desde identidade visual até campanhas digitais.
                             </p>
                             <div style={{ marginTop: '30px' }}>
-                                <motion.a href="/contato" className="btn btn-primary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 1.5 }}>Vamos Bater Um Papo?</motion.a>
+                                    <MotionLink
+                                        to="/contato" // Use 'to' em vez de 'href'
+                                        className="btn btn-primary"
+                                        data-cursor-magnetic
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 1.5 }}
+                                    >
+                                        Vamos Bater Um Papo?
+                                    </MotionLink>
                             </div>
                         </FadeIn>
                     </div>

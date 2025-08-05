@@ -51,21 +51,21 @@ const Header: React.FC = () => {
         <>
             <header className={headerClasses}>
                 <div className="navbar">
-                    <Link to="/" className="logo">Fiigura</Link>
+                    <Link to="/" data-cursor-magnetic className="logo">Fiigura</Link>
                     <FadeIn className="footer-social">
-                    <div className="social-icons">
-                        <a href="#" target="_blank" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank" aria-label="Vimeo"><i className="fab fa-vimeo-v"></i></a>
-                        <a href="#" target="_blank" aria-label="Behance"><i className="fab fa-behance"></i></a>
-                    </div>
-                </FadeIn>
+                        <div className="social-icons">
+                            <a href="#" target="_blank" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+                            <a href="#" target="_blank" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank" aria-label="Vimeo"><i className="fab fa-vimeo-v"></i></a>
+                            <a href="#" target="_blank" aria-label="Behance"><i className="fab fa-behance"></i></a>
+                        </div>
+                    </FadeIn>
                     <button className="menu-toggle" aria-label="Abrir menu" onClick={() => setMenuOpen(true)}>
                         {/* Substitua "Menu" por um ícone do Font Awesome */}
                         <i className="fas fa-bars"></i>
                     </button>
                 </div>
-                
+
             </header>
 
             <div className={`fullscreen-menu ${isMenuOpen ? 'is-active' : ''}`}>
