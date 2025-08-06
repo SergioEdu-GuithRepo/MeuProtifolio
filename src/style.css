@@ -44,7 +44,8 @@ body.light-mode {
     --color-text: #1a1a1a;
     --color-text-secondary: #555555;
     --color-border: rgba(200, 200, 200, 0.8);
-    --color-accent: #9EFF00; /* Um azul vibrante para o modo claro */
+    --color-accent: #9EFF00;
+    /* Um azul vibrante para o modo claro */
     --color-glass-bg: rgba(255, 255, 255, 0.7);
 }
 
@@ -215,7 +216,7 @@ header.scrolled {
 
 .menu-toggle {
     background: none;
-    border: 1px solid var(--primary-color);
+    border: 1px solid rgba(0, 0, 0, 0);
     color: var(--primary-color);
     padding: 10px 0;
     font-family: 'Poppins', sans-serif;
@@ -839,7 +840,7 @@ header.scrolled {
 }
 
 .contact-hero h1 {
-    font-size: clamp(2.8rem, 8vw, 4rem);
+    font-size: clamp(2.5rem, 7vw, 3.5rem);
     font-weight: 700;
 }
 
@@ -868,17 +869,9 @@ header.scrolled {
     margin: 0 auto;
 }
 
-.contact-content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 60px;
-    margin-bottom: 80px;
-    padding: 0 5%;
-}
-
 /* Lado Esquerdo: Formulário */
 .contact-form-container h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     margin-bottom: 15px;
 }
 
@@ -932,8 +925,16 @@ header.scrolled {
 /* Lado Direito: Informações */
 .contact-info-container {
     display: flex;
-    flex-direction: column;
-    gap: 30px;
+    flex-direction: row;
+    /* Alinha os blocos lado a lado */
+    gap: 20px;
+
+    /* Adiciona um espaçamento acima para separar do formulário */
+    margin-top: 60px;
+
+    /* Garante que os blocos quebrem a linha em telas menores */
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .info-block {
@@ -944,13 +945,13 @@ header.scrolled {
 }
 
 .info-block i {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--cta-color);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .info-block h3 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     margin-bottom: 10px;
     color: var(--primary-color);
 }
@@ -958,7 +959,7 @@ header.scrolled {
 .info-block p,
 .info-block a {
     color: var(--secondary-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.6;
     text-decoration: none;
 }
@@ -1033,17 +1034,13 @@ header.scrolled {
 }
 
 .contact-content-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 60px;
-    margin-bottom: 80px;
-    padding: 0 5%;
-}
-
-/* Lado Esquerdo: Formulário */
-.contact-form-container h2 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
+    display: block;
+    /* Faz com que os filhos se comportem como blocos empilhados */
+    max-width: 800px;
+    /* Define uma largura máxima para o conteúdo central */
+    margin: 0 auto 80px auto;
+    /* Centraliza o container e adiciona margem inferior */
+    padding: 0 5%
 }
 
 .contact-form-container p {
@@ -1104,18 +1101,136 @@ header.scrolled {
     transform: translateY(-2px);
 }
 
-/* Lado Direito: Informações */
-.contact-info-container {
+/* src/style.css */
+
+/*
+============================================================
+--- PÁGINA DE CONTATO (DESIGN APRIMORADO) ---
+============================================================
+*/
+
+.contact-page-wrapper {
+    display: grid;
+    /* Proporção invertida: formulário (esquerda) maior, informações (direita) menor */
+    grid-template-columns: 2.5fr 1fr; 
+    align-items: center;
+    min-height: 100vh;
+    padding: 0 5%;
+    gap: 80px; /* Mais espaço entre as colunas */
+}
+
+/* Coluna da Direita: Informações */
+.contact-info-column {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 40px;
+}
+.info-section h4 {
+    display: flex; /* Alinha o ícone e o texto */
+    align-items: center;
+    gap: 15px; /* Espaço entre ícone e texto */
+    text-transform: uppercase;
+    color: var(--text-secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+.info-section h4 i {
+    font-size: 1.2rem; /* Tamanho do ícone */
+    color: var(--accent-color);
+}
+.info-section p {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    padding-left: 37px; /* Alinha o parágrafo com o texto do título */
+}
+.info-section a { color: var(--text-color); transition: color 0.3s ease; }
+.info-section a:hover { color: var(--accent-color); }
+
+/* Coluna da Esquerda: Card do Formulário */
+.contact-form-column {
+    background-color: var(--bg-secondary-color);
+    padding: 50px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+.form-header { margin-bottom: 40px; }
+.form-header h2 { font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.2; }
+.form-header h2 span { color: var(--accent-color); }
+
+/* Formulário e Inputs (MELHORIA DE VISIBILIDADE) */
+.new-contact-form { width: 100%; }
+.input-group { margin-bottom: 25px; position: relative; }
+.input-group label { display: block; color: var(--text-secondary-color); margin-bottom: 8px; font-size: 0.9rem; }
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    /* Cor de fundo mais clara para destacar o campo */
+    background-color: #2a2a2a; 
+    /* Borda sutil para definir a área clicável */
+    border: 1px solid #444; 
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(158, 255, 0, 0.2);
+}
+.input-group textarea { resize: vertical; }
+
+/* Botão de Envio (AGORA MENOR) */
+.btn-send {
+    /* Não ocupa mais a largura total */
+    width: auto; 
+    padding: 15px 40px; /* Padding ajustado */
+    border-radius: 10px;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn-send:hover { opacity: 0.85; }
+.btn-send[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+/* Responsividade da Página de Contato */
+@media (max-width: 992px) {
+    .contact-page-wrapper {
+        grid-template-columns: 1fr;
+        padding: 120px 8% 80px 8%;
+        min-height: auto;
+        gap: 0;
+    }
+    .contact-form-column {
+        /* Garante que o formulário venha primeiro em telas pequenas */
+        order: 1;
+    }
+    .contact-info-column {
+        order: 2;
+        margin-top: 60px; /* Espaço entre o formulário e as infos */
+        text-align: left;
+    }
+    .info-section p {
+        padding-left: 0; /* Remove o padding extra no mobile */
+    }
+    .contact-form-column { padding: 40px; }
 }
 
 .info-block {
-    background-color: #1a1a1a;
+    background-color: var(--bg-secondary-color);
     padding: 30px;
     border-radius: 8px;
     text-align: center;
+    /* Faz com que cada bloco tente ocupar um espaço igual, mas possa encolher */
+    flex: 1 1 250px;
 }
 
 .info-block i {
@@ -1361,6 +1476,19 @@ header.scrolled .menu-toggle:hover {
 
 /* --- Breakpoint Principal para Celulares (<= 768px) --- */
 @media (max-width: 768px) {
+
+
+    .contact-form-container h2 {
+        /* Reduz ainda mais o título em telas de celular */
+        font-size: 1.8rem;
+    }
+
+
+    .info-block {
+        /* Reduz o padding interno dos blocos em telas menores */
+        padding: 25px;
+    }
+
 
     /* === GERAL === */
     body {
@@ -1674,14 +1802,17 @@ header.scrolled .menu-toggle:hover {
 }
 
 [data-cursor-magnetic] {
-    position: relative; /* Necessário para o z-index funcionar */
-    z-index: 2;         /* Garante que o elemento fique NA FRENTE do cursor magnético */
+    position: relative;
+    /* Necessário para o z-index funcionar */
+    z-index: 2;
+    /* Garante que o elemento fique NA FRENTE do cursor magnético */
 }
 
 /* Opcional: Melhora a aparência do cursor de texto */
 .custom-cursor-main {
     /* ... */
-    background-color: transparent; /* Garante que não tenha fundo por padrão */
+    background-color: transparent;
+    /* Garante que não tenha fundo por padrão */
 }
 
 /* Quando em modo texto, o cursor principal se torna uma barra sólida */
@@ -1731,4 +1862,3 @@ button:hover~.custom-cursor-trail {
     transform: scale(1.5);
     background-color: rgba(255, 255, 255, 0.4);
 }
-

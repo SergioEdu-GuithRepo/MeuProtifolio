@@ -183,11 +183,11 @@ const HomePage: React.FC = () => {
                 <section id="portfolio">
                     <div className="portfolio-container">
                         <FadeIn className="filter-buttons">
-                            <button className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`} onClick={() => setActiveFilter('all')}>Todos</button>
-                            <button className={`filter-btn ${activeFilter === 'branding' ? 'active' : ''}`} onClick={() => setActiveFilter('branding')}>Branding</button>
-                            <button className={`filter-btn ${activeFilter === 'webdesign' ? 'active' : ''}`} onClick={() => setActiveFilter('webdesign')}>Web Design</button>
-                            <button className={`filter-btn ${activeFilter === 'campanhas' ? 'active' : ''}`} onClick={() => setActiveFilter('campanhas')}>Campanhas</button>
-                            <button className={`filter-btn ${activeFilter === 'editorial' ? 'active' : ''}`} onClick={() => setActiveFilter('editorial')}>Editorial</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`} onClick={() => setActiveFilter('all')}>Todos</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'branding' ? 'active' : ''}`} onClick={() => setActiveFilter('branding')}>Branding</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'webdesign' ? 'active' : ''}`} onClick={() => setActiveFilter('webdesign')}>Web Design</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'campanhas' ? 'active' : ''}`} onClick={() => setActiveFilter('campanhas')}>Campanhas</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'editorial' ? 'active' : ''}`} onClick={() => setActiveFilter('editorial')}>Editorial</button>
                         </FadeIn>
 
                         <Masonry
