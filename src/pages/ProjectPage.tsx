@@ -9,6 +9,7 @@ import BlockContent from '@sanity/block-content-to-react';
 import PageTransition from '../components/PageTransition';
 import CoverflowCarousel from '../components/CoverflowCarousel';
 
+
 // Conexão com Sanity
 import sanityClient from '../sanityClient';
 
