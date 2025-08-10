@@ -694,6 +694,55 @@ header.scrolled {
     font-size: 0.9rem;
     color: #888;
     margin-bottom: 15px;
+
+}
+
+.carousel-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001; /* Garante que fique acima de tudo */
+    padding: 20px;
+}
+
+/* O container para o conteúdo do modal */
+.carousel-modal-content {
+    position: relative;
+    width: 100%;
+    max-width: 1200px; /* Largura máxima do carrossel */
+    height: 80%;
+}
+
+/* Adiciona um cursor de "clicável" nas imagens do texto */
+.project-content .clickable-image {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.project-content .clickable-image:hover {
+    transform: scale(1.02);
+}
+
+/* Botão para fechar o modal */
+.close-carousel-btn {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    z-index: 10002;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.close-carousel-btn:hover {
+    transform: scale(1.1);
 }
 
 .coverflow-carousel {
@@ -701,6 +750,113 @@ header.scrolled {
     width: 100%;
     margin-top: 40px;
     margin-bottom: 40px;
+}
+
+.project-page-behance {
+    max-width: 900px; /* Largura máxima para o conteúdo de TEXTO */
+    margin: 150px auto 80px;
+    padding: 0 5%;
+}
+
+.project-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+.project-header .project-main-category {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    color: var(--text-secondary-color);
+    margin-bottom: 15px;
+}
+.project-header h1 {
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    line-height: 1.1;
+    color: var(--text-color);
+}
+
+/* O container para o conteúdo renderizado pelo Sanity */
+.project-content {
+    /* Define o estilo base para todo o texto dentro dele */
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary-color);
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA OS ELEMENTOS RENDERIZADOS --- */
+
+/* Mira em QUALQUER h2 ou h3 DENTRO do .project-content */
+.project-content h2, 
+.project-content h3 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    /* Garante que os títulos fiquem dentro da largura do texto */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Mira em QUALQUER parágrafo DENTRO do .project-content */
+.project-content p {
+    margin-bottom: 20px;
+}
+
+/* Mira em QUALQUER link DENTRO do .project-content */
+.project-content a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+/* A MÁGICA PARA AS IMAGENS GRANDES (MAIS ROBUSTO) */
+/* Mira em QUALQUER figure DENTRO do .project-content */
+.project-content figure {
+    /* Faz a imagem ocupar a largura total da JANELA */
+    width: 100vw;
+    max-width: 100vw; /* Garante que não exceda */
+    
+    /* Usa calc() para centralizar a imagem perfeitamente na tela */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    /* Espaçamento e reset */
+    height: auto;
+    margin: 60px 0; /* Espaçamento vertical */
+}
+
+/* Mira em QUALQUER img DENTRO de uma figure */
+.project-content figure img {
+    display: block; /* Remove espaços extras abaixo da imagem */
+    width: 100%;    /* Faz a imagem preencher a figure */
+    height: auto;
+}
+
+
+/* --- RESPONSIVIDADE PARA O NOVO LAYOUT --- */
+@media (max-width: 992px) {
+    /* Em telas menores que o container de texto, faz as imagens ocuparem 100% da largura */
+    .project-content figure {
+        width: 100%;
+        max-width: 100%;
+        left: 0;
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .project-page-behance {
+        margin-top: 120px;
+        padding: 0; 
+    }
+    .project-header,
+    .project-content {
+        padding: 0 8%; /* Aumenta o padding lateral do texto em celulares */
+    }
+    .project-content figure {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
 }
 
 .carousel-stage {

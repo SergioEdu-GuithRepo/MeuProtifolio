@@ -86,6 +86,8 @@ const ProjectPage: React.FC = () => {
                         />
                     </div>
                 </div>
+
+                
             </>
         </PageTransition>
     );

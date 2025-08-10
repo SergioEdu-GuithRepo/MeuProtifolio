@@ -3,13 +3,17 @@
 import React from 'react';
 import { motion, type PanInfo } from 'framer-motion';
 
+
+
+// Aceita uma nova prop: initialSlide
 interface CoverflowCarouselProps {
     images: string[];
+    initialSlide?: number;
 }
 
 // Criamos nosso próprio hook de estado para o carrossel, para manter o código limpo
-const useCoverflow = (totalSlides: number) => {
-    const [currentIndex, setCurrentIndex] = React.useState(0);
+const useCoverflow = (totalSlides: number, initialSlide: number) => {
+    const [currentIndex, setCurrentIndex] = React.useState(initialSlide);
 
     const goToSlide = (index: number) => {
         setCurrentIndex(index);
@@ -23,12 +27,17 @@ const useCoverflow = (totalSlides: number) => {
         setCurrentIndex((prev) => (prev + 1) % totalSlides);
     };
 
+     React.useEffect(() => {
+        setCurrentIndex(initialSlide);
+    }, [initialSlide]);
+
     return { currentIndex, goToSlide, goToPrev, goToNext };
 };
 
-const CoverflowCarousel: React.FC<CoverflowCarouselProps> = ({ images }) => {
+const CoverflowCarousel: React.FC<CoverflowCarouselProps> = ({ images, initialSlide = 0 }) => {
+
     const totalSlides = images.length;
-    const { currentIndex, goToSlide, goToPrev, goToNext } = useCoverflow(totalSlides);
+    const { currentIndex, goToSlide, goToPrev, goToNext } = useCoverflow(totalSlides, initialSlide);
 
     // Função que é chamada ao final do gesto de arrastar
     const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
@@ -36,11 +45,11 @@ const CoverflowCarousel: React.FC<CoverflowCarouselProps> = ({ images }) => {
         const velocity = info.velocity.x;
         // O 'deslocamento' do arraste no eixo X
         const offset = info.offset.x;
-        
+
         // Se o arraste foi rápido para a esquerda OU se arrastou mais de 50% para a esquerda
         if (velocity < -500 || offset < -100) {
             goToNext();
-        } 
+        }
         // Se o arraste foi rápido para a direita OU se arrastou mais de 50% para a direita
         else if (velocity > 500 || offset > 100) {
             goToPrev();
@@ -62,7 +71,7 @@ const CoverflowCarousel: React.FC<CoverflowCarouselProps> = ({ images }) => {
             </div>
         );
     }
-    
+
     return (
         <div className="coverflow-carousel">
             {/* O motion.div agora envolve o palco do carrossel */}
@@ -94,7 +103,7 @@ const CoverflowCarousel: React.FC<CoverflowCarouselProps> = ({ images }) => {
                     );
                 })}
             </motion.div>
-            
+
             <div className="carousel-navigation">
                 {images.map((_, index) => (
                     <button
