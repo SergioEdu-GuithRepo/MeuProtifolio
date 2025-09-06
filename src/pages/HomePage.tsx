@@ -125,7 +125,7 @@ const HomePage: React.FC = () => {
                 </Helmet>
 
                 <section id="hero" ref={heroRef}>
-                    <div className={`hero-slide ${activeSlide === 0 ? 'active-slide' : ''}`} style={{ backgroundImage: `url('https://bobcorp.nyc3.digitaloceanspaces.com/rabiscodahistoria/2023/07/Fotos-campanha-publicitaria-criativa-sucesso.webp')` }}>
+                    <div className={`hero-slide ${activeSlide === 0 ? 'active-slide' : ''}`} style={{ backgroundImage: `url('https://cdn.sanity.io/images/9esw1hz4/production/b79eab7419bf769e77499883c6c2c893b57602ed-2400x1507.jpg')` }}>
                         <div className="hero-content">
                             <h1 className="gradient-text">DESIGN ESTRATÉGICO</h1>
                             <h2 style={{ color: 'white', fontWeight: 700 }}>DIREÇÃO CRIATIVA</h2>
@@ -136,7 +136,7 @@ const HomePage: React.FC = () => {
                             </motion.a> */}
                         </div>
                     </div>
-                    <div className={`hero-slide ${activeSlide === 1 ? 'active-slide' : ''}`} style={{ backgroundImage: `url('https://vivagreen.com.br/wp-content/uploads/2018/02/robin-wood-macaco-1.jpg')` }}>
+                    <div className={`hero-slide ${activeSlide === 1 ? 'active-slide' : ''}`} style={{ backgroundImage: `url('https://cdn.sanity.io/images/9esw1hz4/production/d35a6037e87743d31d19411de743e9f186f6edec-1926x2400.jpg')` }}>
                         <div className="hero-content">
                             <h1 className="gradient-text">CONSTRUINDO MARCAS</h1>
                             <h2 style={{ color: 'white', fontWeight: 700 }}>CONTANDO HISTÓRIAS</h2>
