@@ -148,7 +148,7 @@ const HomePage: React.FC = () => {
 
                 </section>
 
-                <section id="about" ref={aboutSectionRef}>
+                {/* <section id="about" ref={aboutSectionRef}>
                     <div className="about-container">
                         <FadeIn className="about-image" ><img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="foto" /></FadeIn>
                         <FadeIn className="about-text" >
@@ -178,7 +178,7 @@ const HomePage: React.FC = () => {
                             </div>
                         </FadeIn>
                     </div>
-                </section>
+                </section> */}
 
                 <section id="portfolio">
                     <div className="portfolio-container">
