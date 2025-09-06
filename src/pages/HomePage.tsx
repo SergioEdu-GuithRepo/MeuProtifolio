@@ -16,7 +16,7 @@ import { type ProjectCategory } from '../types/data';
 
 import Masonry from 'react-masonry-css';
 
-const MotionLink = motion(Link);
+/* const MotionLink = motion(Link); */
 
 
 // --- Tipagem para os dados ---
