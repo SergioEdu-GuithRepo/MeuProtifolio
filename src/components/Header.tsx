@@ -52,12 +52,11 @@ const Header: React.FC = () => {
             <header className={headerClasses}>
                 <div className="navbar">
                     <Link to="/" data-cursor-magnetic className="logo">Fiigura</Link>
-                    <FadeIn className="footer-social">
-                        <div className="social-icons">
-                            <a href="#" target="_blank" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-                            <a href="#" target="_blank" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-                            <a href="#" target="_blank" aria-label="Vimeo"><i className="fab fa-vimeo-v"></i></a>
-                            <a href="#" target="_blank" aria-label="Behance"><i className="fab fa-behance"></i></a>
+                    <FadeIn className="social-icons-header-wrapper">
+                        <div className="social-icons-header">
+                            <a href="https://www.instagram.com/sergiio.fiigura/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/s%C3%A9rgio-eduardo-s%C3%A9rgio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.behance.net/sergiofigura" target="_blank" rel="noopener noreferrer" aria-label="Behance"><i className="fab fa-behance"></i></a>
                         </div>
                     </FadeIn>
                     <button className="menu-toggle" aria-label="Abrir menu" onClick={() => setMenuOpen(true)}>

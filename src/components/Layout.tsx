@@ -12,10 +12,22 @@ import ThemeToggleButton from './ThemeToggleButton'; // Importe o botão
 const Layout: React.FC = () => {
     const location = useLocation();
 
-    // Efeito para rolar para o topo em cada mudança de rota
+    // Efeito para rolar para o topo em cada mudança de rota — ou até a âncora (#portfolio, etc.), se houver uma
     useEffect(() => {
+        if (location.hash) {
+            const id = location.hash.replace('#', '');
+            const timeout = setTimeout(() => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    window.scrollTo(0, 0);
+                }
+            }, 50);
+            return () => clearTimeout(timeout);
+        }
         window.scrollTo(0, 0);
-    }, [location.pathname]);
+    }, [location.pathname, location.hash]);
 
     // Lógica do cursor customizado
     useEffect(() => {
@@ -65,7 +77,7 @@ const Layout: React.FC = () => {
     return (
         <>
             {/*<div id="preloader">
-                <div className="loader-logo">ICONI</div>
+                <div className="loader-logo">Fiigura</div>
             </div>  */}
 
             <Header />

@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import PageTransition from '../components/PageTransition';
 import FadeIn from '../components/FadeIn';
 import ImageLoader from '../components/ImageLoader';
+import { TextAnimate } from '../components/TextAnimate';
 
 // Conexão com Sanity
 import sanityClient from '../sanityClient';
@@ -16,7 +17,7 @@ import { type ProjectCategory } from '../types/data';
 
 import Masonry from 'react-masonry-css';
 
-/* const MotionLink = motion(Link); */
+const MotionLink = motion(Link);
 
 
 // --- Tipagem para os dados ---
@@ -27,6 +28,17 @@ interface SanityProject {
     category: ProjectCategory;
 }
 
+// Rótulo de exibição para cada categoria (o valor interno continua batendo com o Sanity)
+const categoryLabels: Record<ProjectCategory, string> = {
+    branding: 'Product Art',
+    campanhas: 'Retoque & CGI',
+    webdesign: 'Web Design',
+    editorial: 'Editorial',
+};
+
+// Marcas com que já trabalhou/teve parceria (placeholder em texto até termos os logos reais)
+const brandPartners = ['Unitel', 'Zoom', 'Cuca', 'Pepsi', 'Zumol', 'Natu'];
+
 const HomePage: React.FC = () => {
     // --- Estados do Componente ---
     const [projects, setProjects] = useState<SanityProject[]>([]);
@@ -34,10 +46,18 @@ const HomePage: React.FC = () => {
     const [activeFilter, setActiveFilter] = useState<ProjectCategory | 'all'>('all');
 
     // Estados e Refs do Hero
-    const [activeSlide, setActiveSlide] = useState(0);
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
     const heroRef = useRef<HTMLElement>(null);
     const aboutSectionRef = useRef<HTMLElement>(null); // 1. MUDAMOS A REF PARA A SEÇÃO INTEIRA
-    const lastKnownIndex = useRef(0);
+    const lastKnownSide = useRef(0);
+
+    // Imagens do hero: os 2 projetos mais recentes do portfólio (a query já vem ordenada por _createdAt desc)
+    const heroImages = projects.length > 0
+        ? projects.slice(0, 2).map(p => p.imageUrl)
+        : [
+            'https://cdn.sanity.io/images/9esw1hz4/production/b79eab7419bf769e77499883c6c2c893b57602ed-2400x1507.jpg',
+            'https://cdn.sanity.io/images/9esw1hz4/production/d35a6037e87743d31d19411de743e9f186f6edec-1926x2400.jpg',
+        ];
 
     const masonryBreakpoints = {
         default: 3,   // acima de 1100px → 3 colunas
@@ -84,20 +104,23 @@ const HomePage: React.FC = () => {
             .catch(err => { console.error("Falha ao buscar projetos:", err); setIsLoading(false); });
     }, []);
 
-    // Efeito para o slideshow do Hero
+    // Efeito para o slideshow do Hero: hover na metade esquerda/direita avança/recua a imagem
     useEffect(() => {
         const heroElement = heroRef.current;
-        if (!heroElement) return;
+        if (!heroElement || heroImages.length === 0) return;
         const handleMouseMove = (e: MouseEvent) => {
-            const newIndex = e.clientX / heroElement.offsetWidth < 0.5 ? 0 : 1;
-            if (newIndex !== lastKnownIndex.current) {
-                setActiveSlide(newIndex);
-                lastKnownIndex.current = newIndex;
+            const side = e.clientX / heroElement.offsetWidth < 0.5 ? 0 : 1;
+            if (side !== lastKnownSide.current) {
+                lastKnownSide.current = side;
+                setActiveImageIndex(prev => {
+                    const direction = side === 1 ? 1 : -1;
+                    return (prev + direction + heroImages.length) % heroImages.length;
+                });
             }
         };
         heroElement.addEventListener('mousemove', handleMouseMove);
         return () => heroElement.removeEventListener('mousemove', handleMouseMove);
-    }, []);
+    }, [heroImages.length]);
 
     // Efeito para o parallax do Hero
     useEffect(() => {
@@ -121,53 +144,67 @@ const HomePage: React.FC = () => {
         <PageTransition>
             <>
                 <Helmet>
-                    <title>ICONI - Design e Direção Criativa</title>
+                    <title>Fiigura - Design e Direção Criativa</title>
                 </Helmet>
 
                 <section id="hero" ref={heroRef}>
-                    <div className={`hero-slide ${activeSlide === 0 ? 'active-slide' : ''}`} style={{ backgroundImage: `url('https://cdn.sanity.io/images/9esw1hz4/production/b79eab7419bf769e77499883c6c2c893b57602ed-2400x1507.jpg')` }}>
-                        <div className="hero-content">
-                            <h1 className="gradient-text">DESIGN ESTRATÉGICO</h1>
-                            <h2 style={{ color: 'white', fontWeight: 700 }}>DIREÇÃO CRIATIVA</h2>
-                            <p>Transformando ideias em experiências visuais memoráveis.</p>
-                            <motion.a href="#portfolio" className="btn btn-secondary" data-cursor-magnetic whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
-                            {/* <motion.a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                    <i className="fab fa-github" style={{marginRight: '8px'}}></i>GitHub
-                            </motion.a> */}
+                    {heroImages.map((imageUrl, index) => (
+                        <div
+                            key={`${imageUrl}-${index}`}
+                            className={`hero-slide ${activeImageIndex === index ? 'active-slide' : ''}`}
+                            style={{ backgroundImage: `url('${imageUrl}')` }}
+                        >
+                            <div className="hero-content">
+                                <span className="hero-kicker">Fiigura — Direção de Arte</span>
+                                <TextAnimate
+                                    as="h2"
+                                    by="word"
+                                    animation="blurInUp"
+                                    duration={0.8}
+                                    once
+                                    style={{ color: 'white', fontWeight: 700 }}
+                                >
+                                    DIREÇÃO CRIATIVA
+                                </TextAnimate>
+                                <motion.a href="#portfolio" className="btn btn-secondary" data-cursor-magnetic whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
+                            </div>
                         </div>
-                    </div>
-                    <div className={`hero-slide ${activeSlide === 1 ? 'active-slide' : ''}`} style={{ backgroundImage: `url('https://cdn.sanity.io/images/9esw1hz4/production/d35a6037e87743d31d19411de743e9f186f6edec-1926x2400.jpg')` }}>
-                        <div className="hero-content">
-                            <h1 className="gradient-text">CONSTRUINDO MARCAS</h1>
-                            <h2 style={{ color: 'white', fontWeight: 700 }}>CONTANDO HISTÓRIAS</h2>
-                            <p>De branding a campanhas digitais, meu foco é criar soluções criativas com propósito.</p>
-                            <motion.a href="#portfolio" className="btn btn-secondary"  data-cursor-magnetic whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
+                    ))}
+                    {heroImages.length > 1 && (
+                        <div className="hero-dots" aria-hidden="true">
+                            {heroImages.map((_, index) => (
+                                <span key={index} className={`hero-dot ${activeImageIndex === index ? 'active' : ''}`} />
+                            ))}
                         </div>
-                    </div>
-                    <motion.a href="#portfolio" className="btn btn-secondary" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Explorar Portfólio</motion.a>
-
+                    )}
                 </section>
 
-                {/* <section id="about" ref={aboutSectionRef}>
+                <section id="about" ref={aboutSectionRef}>
                     <div className="about-container">
-                        <FadeIn className="about-image" ><img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="foto" /></FadeIn>
-                        <FadeIn className="about-text" >
-                            <h2>Olá, me chamo Sérgio Eduardo, Diretor de Arte e Designer Gráfico.</h2>
+                        <FadeIn className="about-image">
+                            {/* TODO: substituir por uma foto sua real (retrato ou no ambiente de trabalho) */}
+                            <img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="Sérgio Eduardo" />
+                        </FadeIn>
+                        <FadeIn className="about-text">
+                            <TextAnimate as="h2" by="word" animation="blurInUp" duration={1} once>
+                                Olá, me chamo Sérgio Eduardo, Diretor de Arte e Designer Gráfico por trás da Fiigura.
+                            </TextAnimate>
                             <br></br>
-                            <p>Desde cedo, descobri no design uma forma de expressão e impacto. O que começou como curiosidade virou
-                                vocação — e, ao longo dos anos, fui lapidando meu olhar criativo, aprofundando técnicas e desenvolvendo uma visão
-                                estratégica para comunicar com propósito.</p>
+                            <p>Minha maior força é o compositing fotográfico avançado e o retoque conceitual — unir fotografia, CGI
+                                e composição em camadas para transformar uma ideia em uma imagem que parece impossível de capturar
+                                com uma única fotografia.</p>
                             <br></br>
-                            <p>Sou formado em Engenharia Informática pela Universidade Metodista de Angola, mas foi no universo visual que encontrei minha
-                                verdadeira paixão. Desde então, venho construindo uma jornada que une arte, função e emoção.</p>
+                            <p>Sou formado em Engenharia Informática pela Universidade Metodista de Angola, mas foi no universo visual que encontrei
+                                minha verdadeira paixão. Desde então, venho construindo uma jornada que une arte, função e emoção.</p>
                             <p>
                                 <br></br>
-                                Já colaborei com marcas como a <strong>Universidade Metodista</strong>, <strong>Escola da Missão Metodista</strong> e a gigante das telecomunicações <strong>UNITEL</strong>,
-                                contribuindo com projetos que vão desde identidade visual até campanhas digitais.
+                                Hoje sou o parceiro criativo principal da <strong>UNITEL</strong>, produzindo key visuals, capas editoriais para a
+                                revista <strong>Zoom</strong> e campanhas institucionais. Assino também boa parte do product art e compositing de marcas
+                                de bebidas como <strong>Cuca</strong>, <strong>Pepsi</strong>, <strong>Zumol</strong> e <strong>Natu</strong>.
                             </p>
                             <div style={{ marginTop: '30px' }}>
                                     <MotionLink
-                                        to="/contato" // Use 'to' em vez de 'href'
+                                        to="/contato"
                                         className="btn btn-primary"
                                         data-cursor-magnetic
                                         whileHover={{ scale: 1.05 }}
@@ -178,16 +215,25 @@ const HomePage: React.FC = () => {
                             </div>
                         </FadeIn>
                     </div>
-                </section> */}
+
+                    {/* Marcas com que já trabalhou/teve parceria — placeholders em texto.
+                        TODO: trocar por logotipos reais (SVG/PNG, de preferência em branco/monocromático) */}
+                    <FadeIn className="brands-marquee-wrapper">
+                        <div className="brands-marquee-track">
+                            {[...brandPartners, ...brandPartners].map((brand, index) => (
+                                <span key={index} className="brand-item">{brand}</span>
+                            ))}
+                        </div>
+                    </FadeIn>
+                </section>
 
                 <section id="portfolio">
                     <div className="portfolio-container">
                         <FadeIn className="filter-buttons">
                             <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`} onClick={() => setActiveFilter('all')}>Todos</button>
-                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'branding' ? 'active' : ''}`} onClick={() => setActiveFilter('branding')}>Branding</button>
-                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'webdesign' ? 'active' : ''}`} onClick={() => setActiveFilter('webdesign')}>Web Design</button>
-                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'campanhas' ? 'active' : ''}`} onClick={() => setActiveFilter('campanhas')}>Campanhas</button>
-                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'editorial' ? 'active' : ''}`} onClick={() => setActiveFilter('editorial')}>Editorial</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'branding' ? 'active' : ''}`} onClick={() => setActiveFilter('branding')}>{categoryLabels.branding}</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'campanhas' ? 'active' : ''}`} onClick={() => setActiveFilter('campanhas')}>{categoryLabels.campanhas}</button>
+                            <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'editorial' ? 'active' : ''}`} onClick={() => setActiveFilter('editorial')}>{categoryLabels.editorial}</button>
                         </FadeIn>
 
                         <Masonry
@@ -208,7 +254,9 @@ const HomePage: React.FC = () => {
                                                 className="gallery-item-image"
                                             />
                                             <div className="gallery-item-overlay">
+                                                <span className="gallery-item-category">{categoryLabels[project.category] ?? project.category}</span>
                                                 <h3 className="gallery-item-title">{project.title}</h3>
+                                                <span className="gallery-item-cta">Ver Projeto <i className="fas fa-arrow-right"></i></span>
                                             </div>
                                         </Link>
                                     </FadeIn>

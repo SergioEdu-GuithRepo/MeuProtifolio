@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PageTransition from '../components/PageTransition';
 import { motion } from 'framer-motion';
+import { TextAnimate } from '../components/TextAnimate';
 
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
@@ -23,10 +24,7 @@ const ContactPage: React.FC = () => {
                     <title>Contato - Fiigura | Diretor Criativo & Designer</title>
                 </Helmet>
 
-                {/* Coluna da Esquerda: Informações de Contato */}
-
-
-                {/* Coluna da Direita: Formulário */}
+                {/* Formulário de contato, centralizado */}
                 <motion.div
                     className="contact-form-column"
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -34,7 +32,14 @@ const ContactPage: React.FC = () => {
                     transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
                 >
                     <div className="form-header">
-                        <h2>Vamos trabalhar <span>juntos.</span></h2>
+                        <h2>
+                            <TextAnimate as="span" by="word" animation="blurInUp" duration={0.6} once>
+                                Vamos trabalhar
+                            </TextAnimate>{' '}
+                            <TextAnimate as="span" className="form-header-accent" by="word" animation="blurInUp" duration={0.3} delay={0.5} once>
+                                juntos.
+                            </TextAnimate>
+                        </h2>
                     </div>
 
                     {status === 'success' ? (
@@ -71,27 +76,6 @@ const ContactPage: React.FC = () => {
                             </motion.button>
                         </form>
                     )}
-                </motion.div>
-
-                <motion.div
-                    className="contact-info-column"
-                    initial={{ opacity: 0, x: 50 }} // Animação da direita para a esquerda
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-                >
-                    <div className="info-section">
-                        {/* ADICIONANDO ÍCONES */}
-                        <h4><i className="fas fa-envelope"></i> <a href="mailto:seu.email@exemplo.com">seu.email@exemplo.com</a> </h4>
-                      
-                    </div>
-                    <div className="info-section">
-                        <h4><i className="fas fa-phone-alt"></i> +244 98765-4321</h4>
-                     
-                    </div>
-                    <div className="info-section">
-                        <h4><i className="fas fa-map-marker-alt"></i> Luanda, Angola</h4>
-                        
-                    </div>
                 </motion.div>
             </div>
         </PageTransition>

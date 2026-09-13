@@ -69,7 +69,7 @@ const ProjectPage: React.FC = () => {
         <PageTransition>
             <>
                 <Helmet>
-                    <title>{project.title} - Portfólio ICONI</title>
+                    <title>{project.title} - Portfólio Fiigura</title>
                 </Helmet>
 
                 <div id="project-display-container">
