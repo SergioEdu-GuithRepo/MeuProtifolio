@@ -5,11 +5,14 @@ import { Helmet } from 'react-helmet-async';
 import PageTransition from '../components/PageTransition';
 import { motion } from 'framer-motion';
 import { TextAnimate } from '../components/TextAnimate';
+import GrainGradient from '../components/GrainGradient';
+import { useTheme } from '../context/ThemeContext';
 
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 const ContactPage: React.FC = () => {
     const [status, setStatus] = useState<FormStatus>('idle');
+    const { theme } = useTheme();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,9 +22,20 @@ const ContactPage: React.FC = () => {
 
     return (
         <PageTransition>
+            <GrainGradient
+                width="100%"
+                height="auto"
+                gradientFrom={theme === 'light' ? '#ffffff' : '#1a1a1a'}
+                gradientTo={theme === 'light' ? '#e4e8eb' : '#050505'}
+                driftGlowColor="#9EFF00"
+            >
             <div className="contact-page-wrapper">
                 <Helmet>
                     <title>Contato - Fiigura | Diretor Criativo & Designer</title>
+                    <meta name="description" content="Fale com Sérgio Eduardo (Fiigura) sobre direção de arte, compositing fotográfico e projetos de branding, campanhas ou editorial." />
+                    <meta property="og:title" content="Contato - Fiigura" />
+                    <meta property="og:description" content="Vamos trabalhar juntos: fale com Sérgio Eduardo sobre o seu próximo projeto." />
+                    <meta property="og:url" content="https://fiigura.space/contato" />
                 </Helmet>
 
                 {/* Formulário de contato, centralizado */}
@@ -67,7 +81,8 @@ const ContactPage: React.FC = () => {
                             </div>
                             <motion.button
                                 type="submit"
-                                className="btn-send"
+                                className="btn btn-primary btn-send"
+                                data-cursor-magnetic
                                 disabled={status === 'sending'}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
@@ -78,6 +93,7 @@ const ContactPage: React.FC = () => {
                     )}
                 </motion.div>
             </div>
+            </GrainGradient>
         </PageTransition>
     );
 };

@@ -6,6 +6,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fiigura</title>
+    <!-- meta description, og:title, og:description e og:url ficam por conta de cada
+         página via react-helmet-async (ver <Helmet> em HomePage/ContactPage/ProjectPage),
+         para não duplicar tags com o HTML estático. Aqui só o que não varia por página. -->
+
+    <!-- Open Graph / Facebook, LinkedIn, WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Fiigura" />
+    <meta property="og:image" content="https://fiigura.space/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter Card (título/descrição usam og:title/og:description como fallback) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://fiigura.space/og-image.png" />
+
+    <!-- Título e descrição de reserva ficam num <Helmet> no Layout.tsx, para que o Helmet
+         de cada página os substitua corretamente (sem duplicar tags no documento). -->
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
 
     <!-- Adicione estas 3 linhas para a fonte Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

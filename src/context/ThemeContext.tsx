@@ -1,6 +1,6 @@
 // src/context/ThemeContext.tsx
 
-import { createContext, useState, useEffect, useContext, type ReactNode } from 'react';
+import { createContext, useState, useLayoutEffect, useContext, type ReactNode } from 'react';
 
 // Define a "forma" do nosso contexto
 interface ThemeContextType {
@@ -31,8 +31,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
     };
 
-    // Efeito que roda sempre que o 'theme' muda
-    useEffect(() => {
+    // Efeito que roda sempre que o 'theme' muda — useLayoutEffect (em vez de useEffect) garante
+    // que a troca de classe já esteja aplicada no DOM antes do snapshot da View Transition API
+    // (ver AnimatedThemeToggler, que usa flushSync + startViewTransition)
+    useLayoutEffect(() => {
         // 1. Salva a nova escolha no localStorage
         localStorage.setItem('theme', theme);
 

@@ -54,9 +54,9 @@ const Header: React.FC = () => {
                     <Link to="/" data-cursor-magnetic className="logo">Fiigura</Link>
                     <FadeIn className="social-icons-header-wrapper">
                         <div className="social-icons-header">
-                            <a href="https://www.instagram.com/sergiio.fiigura/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-                            <a href="https://www.linkedin.com/in/s%C3%A9rgio-eduardo-s%C3%A9rgio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-                            <a href="https://www.behance.net/sergiofigura" target="_blank" rel="noopener noreferrer" aria-label="Behance"><i className="fab fa-behance"></i></a>
+                            <a href="https://www.instagram.com/sergiio.fiigura/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-cursor-magnetic><i className="fab fa-instagram"></i></a>
+                            <a href="https://www.linkedin.com/in/s%C3%A9rgio-eduardo-s%C3%A9rgio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-cursor-magnetic><i className="fab fa-linkedin-in"></i></a>
+                            <a href="https://www.behance.net/sergiofigura" target="_blank" rel="noopener noreferrer" aria-label="Behance" data-cursor-magnetic><i className="fab fa-behance"></i></a>
                         </div>
                     </FadeIn>
                     <button className="menu-toggle" aria-label="Abrir menu" onClick={() => setMenuOpen(true)}>

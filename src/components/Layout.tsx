@@ -1,6 +1,7 @@
 // src/components/Layout.tsx
 import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Header from './Header';
 import Footer from './Footer';
 import CustomCursor from './CustomCursor'; // Importe o novo componente
@@ -79,6 +80,15 @@ const Layout: React.FC = () => {
             {/*<div id="preloader">
                 <div className="loader-logo">Fiigura</div>
             </div>  */}
+
+            {/* Título, description e OG de reserva — cada página pode sobrescrever com seu próprio <Helmet> */}
+            <Helmet>
+                <title>Fiigura - Design e Direção Criativa</title>
+                <meta name="description" content="Fiigura — Design e direção criativa para marcas. Compositing fotográfico avançado e retoque conceitual por Sérgio Eduardo." />
+                <meta property="og:title" content="Fiigura — Direção de Arte" />
+                <meta property="og:description" content="Design e direção criativa para marcas. Compositing fotográfico avançado e retoque conceitual." />
+                <meta property="og:url" content="https://fiigura.space/" />
+            </Helmet>
 
             <Header />
 

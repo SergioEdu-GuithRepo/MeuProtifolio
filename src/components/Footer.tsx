@@ -14,9 +14,9 @@ const Footer: React.FC = () => {
                 <FadeIn className="footer-social">
                     <h3>Minhas Redes sociais</h3>
                     <div className="social-icons">
-                        <a href="https://www.instagram.com/sergiio.fiigura/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/s%C3%A9rgio-eduardo-s%C3%A9rgio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.behance.net/sergiofigura" target="_blank" rel="noopener noreferrer" aria-label="Behance"><i className="fab fa-behance"></i></a>
+                        <a href="https://www.instagram.com/sergiio.fiigura/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" data-cursor-magnetic><i className="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/s%C3%A9rgio-eduardo-s%C3%A9rgio/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" data-cursor-magnetic><i className="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.behance.net/sergiofigura" target="_blank" rel="noopener noreferrer" aria-label="Behance" data-cursor-magnetic><i className="fab fa-behance"></i></a>
                     </div>
                 </FadeIn>
                 <FadeIn className="footer-contact">
@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
                     <a href="mailto:sergiokuroko2@gmail.com" className="footer-email">sergiokuroko2@gmail.com</a>
                     <form className="newsletter-form" onSubmit={e => e.preventDefault()}>
                         <input type="email" placeholder="Subscreva. Insira o seu e-mail..." />
-                        <button type="submit" aria-label="Subscrever"><i className="fas fa-envelope"></i></button>
+                        <button type="submit" aria-label="Subscrever" data-cursor-magnetic><i className="fas fa-envelope"></i></button>
                     </form>
                 </FadeIn>
             </div>

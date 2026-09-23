@@ -26,8 +26,11 @@ const CustomCursor: React.FC = () => {
 
             const target = e.target as HTMLElement;
             const magneticElement = target.closest('[data-cursor-magnetic]');
+            const galleryItem = target.closest('.gallery-item');
 
-            if (magneticElement) {
+            if (galleryItem) {
+                setVariant('view');
+            } else if (magneticElement) {
                 const { x, y, width, height } = magneticElement.getBoundingClientRect();
                 setMagneticTarget({ x, y, width, height });
                 setVariant('magnetic');
@@ -70,12 +73,21 @@ const CustomCursor: React.FC = () => {
             backgroundColor: 'rgba(255, 255, 255, 0.15)',
             mixBlendMode: 'difference',
         },
+        view: {
+            width: 90,
+            height: 90,
+            borderRadius: '50%',
+            borderWidth: '0px',
+            backgroundColor: 'var(--accent-color)',
+            mixBlendMode: 'normal',
+        },
     };
 
     const trailVariants = {
         default: { scale: 1 },
         text: { scale: 0 },
         magnetic: { scale: 0 },
+        view: { scale: 0 },
     };
     
     // A CORREÇÃO ESTÁ AQUI: Controlamos a posição diretamente com `style`
@@ -102,11 +114,32 @@ const CustomCursor: React.FC = () => {
                         ? (magneticTarget?.y ?? 0) + (magneticTarget?.height ?? 0) / 2
                         : springY,
                     x: '-50%', y: '-50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                 }}
                 variants={mainVariants}
                 animate={variant}
                 transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-            />
+            >
+                {variant === 'view' && (
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            color: '#0a0a0a',
+                            fontSize: '0.85rem',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            pointerEvents: 'none',
+                        }}
+                    >
+                        Ver
+                    </motion.span>
+                )}
+            </motion.div>
         </>
     );
 };

@@ -5,6 +5,10 @@ import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 import ContactPage from './pages/ContactPage';
 import ProjectPage from './pages/ProjectPage';
+import TestPage from './pages/TestPage';
+import TestGridPage from './pages/TestGridPage';
+import TestGrainPage from './pages/TestGrainPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   const location = useLocation(); // 2. Obtenha a localização atual
@@ -18,6 +22,10 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="contato" element={<ContactPage />} />
           <Route path="projeto/:projectId" element={<ProjectPage />} />
+          <Route path="teste" element={<TestPage />} />
+          <Route path="teste-grid" element={<TestGridPage />} />
+          <Route path="teste-grain" element={<TestGrainPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </AnimatePresence>

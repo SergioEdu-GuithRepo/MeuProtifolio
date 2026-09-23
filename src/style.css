@@ -2,14 +2,17 @@
 
 /* --- Variáveis e Configurações Globais --- */
 :root {
+    --background-color: #121212;
+    --bg-secondary-color: #1a1a1a;
     --primary-color: #ffffff;
     --secondary-color: #aaaaaa;
-    --background-color: #121212;
+    --text-color: #ffffff;
+    --text-secondary-color: #aaaaaa;
+    --border-color: rgba(60, 60, 60, 0.5);
     --accent-color: #9EFF00;
     --cta-color: #9EFF00;
-}
 
-:root {
+    /* Aliases mantidos por compatibilidade com trechos mais antigos do CSS */
     --color-background: #121212;
     --color-background-secondary: #1a1a1a;
     --color-text: #ffffff;
@@ -30,6 +33,14 @@ html {
     box-sizing: border-box;
 }
 
+/* Desativa o crossfade padrão da View Transition API, para só a nossa
+   animação de círculo (feita via clip-path em ThemeToggleButton.tsx) aparecer */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
 body {
     font-family: 'Inter', 'Poppins', sans-serif;
     background-color: var(--background-color);
@@ -41,13 +52,23 @@ body {
 }
 
 body.light-mode {
+    --background-color: #f0f3f5;
+    --bg-secondary-color: #ffffff;
+    --primary-color: #1a1a1a;
+    --secondary-color: #555555;
+    --text-color: #1a1a1a;
+    --text-secondary-color: #555555;
+    --border-color: rgba(200, 200, 200, 0.8);
+    --accent-color: #9EFF00;
+    --cta-color: #9EFF00;
+
+    /* Aliases mantidos por compatibilidade com trechos mais antigos do CSS */
     --color-background: #f0f3f5;
     --color-background-secondary: #ffffff;
     --color-text: #1a1a1a;
     --color-text-secondary: #555555;
     --color-border: rgba(200, 200, 200, 0.8);
     --color-accent: #9EFF00;
-    /* Um azul vibrante para o modo claro */
     --color-glass-bg: rgba(255, 255, 255, 0.7);
 }
 
@@ -173,9 +194,8 @@ header {
 }
 
 header.scrolled {
-    /* Estado "ativo" com efeito vidro fosco */
-    /* Fundo escuro com 80% de opacidade. Ajuste o valor 0.8 como desejar */
-    background-color: rgba(18, 18, 18, 0.8);
+    /* Estado "ativo" com efeito vidro fosco (a cor já reage ao tema claro/escuro) */
+    background-color: var(--color-glass-bg);
 
     /* O efeito de blur. 10px é um bom valor, mas pode ser ajustado */
     backdrop-filter: blur(10px);
@@ -183,7 +203,7 @@ header.scrolled {
     /* Para compatibilidade com Safari */
 
     /* Borda inferior sutil para separação */
-    border-bottom-color: rgba(60, 60, 60, 0.5);
+    border-bottom-color: var(--border-color);
     /* Cor da borda, também com transparência */
 
     /* A regra de 'box-shadow' do estilo antigo pode ser removida ou mantida se preferir */
@@ -238,7 +258,7 @@ header.scrolled {
     width: 100%;
     max-width: 500px;
     height: 100%;
-    background-color: rgba(10, 10, 10, 0.9);
+    background-color: var(--color-glass-bg);
     backdrop-filter: blur(10px);
     z-index: 1001;
     display: flex;
@@ -280,8 +300,9 @@ header.scrolled {
     right: 30px;
     width: 50px;
     height: 50px;
-    background-color: #333;
-    color: #fff;
+    background-color: var(--bg-secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -295,6 +316,32 @@ header.scrolled {
     z-index: 999;
 }
 
+/* Botão de alternar tema claro/escuro — canto inferior esquerdo, sempre visível */
+.theme-toggle-button {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--bg-secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 999;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+}
+
+.theme-toggle-button:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
 #back-to-top.visible {
     opacity: 1;
     visibility: visible;
@@ -303,8 +350,8 @@ header.scrolled {
 
 .site-footer {
     /* --- EFEITO GLASSMORPHISM --- */
-    /* Fundo escuro com 80% de opacidade, igual ao header */
-    background-color: rgba(18, 18, 18, 0.8);
+    /* Fundo com opacidade, igual ao header (já reage ao tema claro/escuro) */
+    background-color: var(--color-glass-bg);
 
     /* O efeito de blur */
     backdrop-filter: blur(10px);
@@ -320,7 +367,7 @@ header.scrolled {
     padding: 60px 5%;
 
     /* Trocamos a borda superior para ter o mesmo efeito do header */
-    border-top: 1px solid rgba(60, 60, 60, 0.5);
+    border-top: 1px solid var(--border-color);
 
     /* A transição não é tão necessária aqui, mas podemos manter por consistência */
     transition: all 0.3s ease;
@@ -338,7 +385,7 @@ header.scrolled {
 .site-footer h3 {
     margin-bottom: 20px;
     font-size: 1.2rem;
-    color: #fff;
+    color: var(--primary-color);
 }
 
 .footer-social .social-icons {
@@ -347,7 +394,7 @@ header.scrolled {
 }
 
 .social-icons a {
-    color: #ffff;
+    color: var(--primary-color);
     font-size: 1.5rem;
     transition: color 0.3s, transform 0.3s;
 }
@@ -367,7 +414,7 @@ header.scrolled {
 
 .newsletter-form {
     display: flex;
-    border: 1px solid #444;
+    border: 1px solid var(--border-color);
     border-radius: 5px;
     overflow: hidden;
     max-width: 350px;
@@ -378,7 +425,7 @@ header.scrolled {
     background: none;
     border: none;
     padding: 15px;
-    color: #fff;
+    color: var(--text-color);
     font-family: 'Poppins';
 }
 
@@ -394,7 +441,7 @@ header.scrolled {
 .footer-bottom {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid #333;
+    border-top: 1px solid var(--border-color);
     font-size: 0.9rem;
 }
 
@@ -545,6 +592,11 @@ header.scrolled {
     line-height: 1.6;
 }
 
+/* Botão do hero: mais afastado do título (o brilho pulsante é padrão de todos os botões, ver abaixo) */
+.hero-content .btn-secondary {
+    margin-top: 48px;
+}
+
 /* Indicador de que dá para passar o mouse dos lados para trocar de imagem */
 .hero-dots {
     position: absolute;
@@ -608,6 +660,11 @@ header.scrolled {
     /*     box-shadow: 0 0 15px rgba(138, 43, 226, 0.4); /* Brilho sutil */
 }
 
+.btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
 
 /* Botão Secundário (estilo "ghost") */
 .btn-secondary {
@@ -623,8 +680,65 @@ header.scrolled {
     transform: translateY(-2px);
 }
 
+/* Todos os botões principais do site (CTA): brilho pulsante contínuo + reflexo ao passar o mouse,
+   pra dar mais sensação de interação sem precisar tocar */
+.btn-primary,
+.btn-secondary {
+    position: relative;
+    overflow: hidden;
+    animation: btnPulse 2.8s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(158, 255, 0, 0.35); }
+    50% { box-shadow: 0 0 0 12px rgba(158, 255, 0, 0); }
+}
+
+/* Brilho que atravessa o botão ao passar o mouse */
+.btn-primary::after,
+.btn-secondary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.28),
+        transparent
+    );
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.btn-primary:hover::after,
+.btn-secondary:hover::after {
+    left: 140%;
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-primary,
+    .btn-secondary {
+        animation: none;
+    }
+    .btn-primary::after,
+    .btn-secondary::after {
+        transition: none;
+    }
+}
+
 #about {
-    background-color: #1a1a1a;
+    padding: 0;
+}
+
+.about-grain-bg {
     padding: 120px 5%;
 }
 
@@ -699,6 +813,10 @@ header.scrolled {
 }
 
 #portfolio {
+    padding: 0;
+}
+
+.portfolio-grain-bg {
     padding: 80px 8%;
 }
 
@@ -853,23 +971,60 @@ header.scrolled {
     padding-bottom: 80px;
 }
 
+/* Preloader da página de projeto */
+.project-loading {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.project-loading-spinner {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    animation: projectLoadingSpin 0.8s linear infinite;
+}
+
+.project-loading-text {
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+@keyframes projectLoadingSpin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-loading-spinner {
+        animation: none;
+    }
+}
+
 #project-display-container {
     max-width: 1100px;
-    margin: 18% auto;
-    padding: 0 5%;
+    margin: 0 auto;
+    padding: 160px 5% 80px 5%;
 }
 
 #project-display-container h1 {
     font-size: clamp(2.5rem, 7vw, 3.5rem);
+    margin-bottom: 40px;
 }
 
 .project-main-category {
+    display: inline-block;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
-    color: #888;
-    margin-bottom: 15px;
-
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 16px;
 }
 
 .carousel-modal-overlay {
@@ -1118,9 +1273,65 @@ header.scrolled {
     background-color: var(--cta-color);
 }
 
+/* Página 404 */
+.notfound-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 5%;
+}
+
+.notfound-code {
+    font-size: clamp(5rem, 15vw, 9rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent-color);
+    opacity: 0.9;
+}
+
+.notfound-container h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    max-width: 600px;
+    margin: 20px 0 10px 0;
+}
+
+.notfound-container p {
+    color: var(--secondary-color);
+    margin-bottom: 40px;
+}
+
+/* Case study: Desafio / Solução / Meu Papel */
+.case-study-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-color);
+}
+
+.case-study-block .case-study-label {
+    display: inline-block;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.case-study-block p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--secondary-color);
+}
+
 .project-details {
     margin-top: 60px;
-    border-top: 1px solid #333;
+    border-top: 1px solid var(--border-color);
     padding-top: 40px;
 }
 
@@ -1159,6 +1370,136 @@ header.scrolled {
     
     /* Adiciona bordas arredondadas, como no carrossel */
     border-radius: 8px;
+}
+
+/* Link "Voltar ao Portfólio" */
+.back-to-portfolio {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.back-to-portfolio:hover {
+    color: var(--accent-color);
+    transform: translateX(-4px);
+}
+
+/* Cliente / ano, ao lado da categoria */
+.project-meta-extra {
+    color: var(--secondary-color);
+    text-transform: none;
+    font-weight: 400;
+    letter-spacing: normal;
+}
+
+/* Compartilhar */
+.project-share {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border-color);
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.project-share a {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.project-share a:hover {
+    color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* CTA de fechamento */
+.project-closing-cta {
+    text-align: center;
+    margin-top: 60px;
+    padding: 60px 5%;
+    border-radius: 16px;
+    background-color: var(--bg-secondary-color);
+}
+
+.project-closing-cta h3 {
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
+    margin-bottom: 24px;
+}
+
+/* Navegação para o projeto anterior/próximo */
+.project-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border-color);
+    margin-top: 40px;
+}
+
+.project-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 5%;
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: background-color 0.3s ease;
+}
+
+.project-nav-link:hover {
+    background-color: var(--bg-secondary-color);
+}
+
+.project-nav-prev {
+    justify-content: flex-start;
+}
+
+.project-nav-next {
+    justify-content: flex-end;
+    text-align: right;
+    grid-column: 2;
+}
+
+.project-nav-thumb {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.project-nav-link span {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.project-nav-link small {
+    color: var(--secondary-color);
+    font-weight: 400;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .project-nav {
+        grid-template-columns: 1fr;
+    }
+    .project-nav-next {
+        grid-column: 1;
+        justify-content: flex-start;
+        text-align: left;
+    }
 }
 
 .detail-section {
@@ -1524,22 +1865,11 @@ header.scrolled {
 }
 .input-group textarea { resize: vertical; }
 
-/* Botão de Envio (AGORA MENOR) */
+/* Botão de Envio do formulário: usa a base .btn .btn-primary; aqui só o que é específico dele */
 .btn-send {
-    /* Não ocupa mais a largura total */
-    width: auto; 
-    padding: 15px 40px; /* Padding ajustado */
-    border-radius: 10px;
-    background-color: var(--accent-color);
-    color: var(--bg-color);
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    width: auto;
 }
-.btn-send:hover { opacity: 0.85; }
-.btn-send[disabled] { opacity: 0.6; cursor: not-allowed; }
+.btn-send[disabled] { opacity: 0.6; cursor: not-allowed; animation: none; }
 
 /* Responsividade da Página de Contato */
 @media (max-width: 992px) {
@@ -1833,6 +2163,15 @@ header.scrolled .menu-toggle:hover {
         max-width: 320px;
     }
 
+    /* O botão do hero fica compacto, ajustado ao texto, em vez de esticado */
+    .hero-content .btn-secondary {
+        width: auto;
+        max-width: none;
+        padding: 14px 32px;
+        font-size: 1rem;
+        margin-top: 36px;
+    }
+
     /* === HEADER E NAVEGAÇÃO === */
     header {
         padding: 20px 5%;
@@ -1876,8 +2215,7 @@ header.scrolled .menu-toggle:hover {
     }
 
     /* === SEÇÕES PRINCIPAIS === */
-    #about,
-    #portfolio {
+    .about-grain-bg {
         padding: 80px 8%;
     }
 
@@ -1932,7 +2270,7 @@ header.scrolled .menu-toggle:hover {
     }
 
     /* === PORTFOLIO (GALERIA) === */
-    #portfolio {
+    .portfolio-grain-bg {
         padding: 80px 8%;
     }
 
@@ -1947,7 +2285,7 @@ header.scrolled .menu-toggle:hover {
 
     /* === PÁGINA DE PROJETO (CARROSSEL) === */
     #project-display-container {
-        margin-top: 120px;
+        padding-top: 120px;
     }
 
     .carousel-stage {
@@ -1975,7 +2313,7 @@ header.scrolled .menu-toggle:hover {
     .footer-about,
     .footer-social,
     .footer-contact {
-        text-align: left;
+        text-align: center;
         margin-bottom: 40px;
         padding-bottom: 30px;
         border-bottom: 1px solid rgba(60, 60, 60, 0.5);
@@ -1989,12 +2327,12 @@ header.scrolled .menu-toggle:hover {
 
     .footer-social .social-icons,
     .newsletter-form {
-        justify-content: flex-start;
+        justify-content: center;
     }
 
     .newsletter-form {
         max-width: 350px;
-        margin: 0;
+        margin: 0 auto;
     }
 
     .social-icons a {
@@ -2072,16 +2410,6 @@ header.scrolled .menu-toggle:hover {
         grid-template-columns: 1fr;
         gap: 40px;
         text-align: left;
-    }
-
-    .newsletter-form {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .newsletter-form input,
-    .newsletter-form button {
-        width: 100%;
     }
 
     .social-icons {

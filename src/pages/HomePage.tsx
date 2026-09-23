@@ -10,10 +10,13 @@ import PageTransition from '../components/PageTransition';
 import FadeIn from '../components/FadeIn';
 import ImageLoader from '../components/ImageLoader';
 import { TextAnimate } from '../components/TextAnimate';
+import GrainGradient from '../components/GrainGradient';
+import BlurHighlight from '../components/BlurHighlight';
+import { useTheme } from '../context/ThemeContext';
 
 // Conexão com Sanity
 import sanityClient from '../sanityClient';
-import { type ProjectCategory } from '../types/data';
+import { type ProjectCategory, categoryLabels } from '../types/data';
 
 import Masonry from 'react-masonry-css';
 
@@ -28,19 +31,12 @@ interface SanityProject {
     category: ProjectCategory;
 }
 
-// Rótulo de exibição para cada categoria (o valor interno continua batendo com o Sanity)
-const categoryLabels: Record<ProjectCategory, string> = {
-    branding: 'Product Art',
-    campanhas: 'Retoque & CGI',
-    webdesign: 'Web Design',
-    editorial: 'Editorial',
-};
-
 // Marcas com que já trabalhou/teve parceria (placeholder em texto até termos os logos reais)
 const brandPartners = ['Unitel', 'Zoom', 'Cuca', 'Pepsi', 'Zumol', 'Natu'];
 
 const HomePage: React.FC = () => {
     // --- Estados do Componente ---
+    const { theme } = useTheme();
     const [projects, setProjects] = useState<SanityProject[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [activeFilter, setActiveFilter] = useState<ProjectCategory | 'all'>('all');
@@ -81,8 +77,9 @@ const HomePage: React.FC = () => {
                 // O cálculo do deslocamento. Move a seção inteira.
                 const translateY = (window.innerHeight / 2 - rect.top) * parallaxFactor;
 
-                // Aplicamos a transformação diretamente no container dos elementos
-                const container = sectionElement.querySelector('.about-container');
+                // Aplicamos a transformação no wrapper que contém o about-container E a faixa de marcas,
+                // para os dois se moverem juntos e nunca ficarem sobrepostos
+                const container = sectionElement.querySelector('.about-parallax-wrapper');
                 if (container) {
                     (container as HTMLElement).style.transform = `translateY(${translateY}px)`;
                 }
@@ -145,6 +142,10 @@ const HomePage: React.FC = () => {
             <>
                 <Helmet>
                     <title>Fiigura - Design e Direção Criativa</title>
+                    <meta name="description" content="Portfólio de Sérgio Eduardo (Fiigura): direção de arte, compositing fotográfico avançado e retoque conceitual para marcas como Unitel, Zoom, Cuca, Pepsi, Zumol e Natu." />
+                    <meta property="og:title" content="Fiigura - Design e Direção Criativa" />
+                    <meta property="og:description" content="Direção de arte, compositing fotográfico avançado e retoque conceitual para marcas." />
+                    <meta property="og:url" content="https://fiigura.space/" />
                 </Helmet>
 
                 <section id="hero" ref={heroRef}>
@@ -180,54 +181,71 @@ const HomePage: React.FC = () => {
                 </section>
 
                 <section id="about" ref={aboutSectionRef}>
-                    <div className="about-container">
-                        <FadeIn className="about-image">
-                            {/* TODO: substituir por uma foto sua real (retrato ou no ambiente de trabalho) */}
-                            <img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="Sérgio Eduardo" />
-                        </FadeIn>
-                        <FadeIn className="about-text">
-                            <TextAnimate as="h2" by="word" animation="blurInUp" duration={1} once>
-                                Olá, me chamo Sérgio Eduardo, Diretor de Arte e Designer Gráfico por trás da Fiigura.
-                            </TextAnimate>
-                            <br></br>
-                            <p>Minha maior força é o compositing fotográfico avançado e o retoque conceitual — unir fotografia, CGI
-                                e composição em camadas para transformar uma ideia em uma imagem que parece impossível de capturar
-                                com uma única fotografia.</p>
-                            <br></br>
-                            <p>Sou formado em Engenharia Informática pela Universidade Metodista de Angola, mas foi no universo visual que encontrei
-                                minha verdadeira paixão. Desde então, venho construindo uma jornada que une arte, função e emoção.</p>
-                            <p>
+                    <GrainGradient
+                        width="100%"
+                        height="auto"
+                        className="about-grain-bg"
+                        gradientFrom={theme === 'light' ? '#f4f4f4' : '#242424'}
+                        gradientTo={theme === 'light' ? '#e0e0e0' : '#141414'}
+                    >
+                    <div className="about-parallax-wrapper">
+                        <div className="about-container">
+                            <FadeIn className="about-image">
+                                {/* TODO: substituir por uma foto sua real (retrato ou no ambiente de trabalho) */}
+                                <img src="https://i.pinimg.com/1200x/45/2a/dc/452adcc3b92ab2338d1d8faa3b532e07.jpg" alt="Sérgio Eduardo" />
+                            </FadeIn>
+                            <FadeIn className="about-text">
+                                <TextAnimate as="h2" by="word" animation="blurInUp" duration={1} once>
+                                    Olá, me chamo Sérgio Eduardo, Diretor de Arte e Designer Gráfico por trás da Fiigura.
+                                </TextAnimate>
                                 <br></br>
-                                Hoje sou o parceiro criativo principal da <strong>UNITEL</strong>, produzindo key visuals, capas editoriais para a
-                                revista <strong>Zoom</strong> e campanhas institucionais. Assino também boa parte do product art e compositing de marcas
-                                de bebidas como <strong>Cuca</strong>, <strong>Pepsi</strong>, <strong>Zumol</strong> e <strong>Natu</strong>.
-                            </p>
-                            <div style={{ marginTop: '30px' }}>
-                                    <MotionLink
-                                        to="/contato"
-                                        className="btn btn-primary"
-                                        data-cursor-magnetic
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 1.5 }}
-                                    >
-                                        Vamos Bater Um Papo?
-                                    </MotionLink>
+                                <BlurHighlight highlightedBits={['compositing fotográfico avançado', 'retoque conceitual']}>
+                                    {'Minha maior força é o compositing fotográfico avançado e o retoque conceitual — unir fotografia, CGI e composição em camadas para transformar uma ideia em uma imagem que parece impossível de capturar com uma única fotografia.'}
+                                </BlurHighlight>
+                                <br></br>
+                                <p>Sou formado em Engenharia Informática pela Universidade Metodista de Angola, mas foi no universo visual que encontrei
+                                    minha verdadeira paixão. Desde então, venho construindo uma jornada que une arte, função e emoção.</p>
+                                <p>
+                                    <br></br>
+                                    Hoje sou o parceiro criativo principal da <strong>UNITEL</strong>, produzindo key visuals, capas editoriais para a
+                                    revista <strong>Zoom</strong> e campanhas institucionais. Assino também boa parte do product art e compositing de marcas
+                                    de bebidas como <strong>Cuca</strong>, <strong>Pepsi</strong>, <strong>Zumol</strong> e <strong>Natu</strong>.
+                                </p>
+                                <div style={{ marginTop: '30px' }}>
+                                        <MotionLink
+                                            to="/contato"
+                                            className="btn btn-primary"
+                                            data-cursor-magnetic
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 1.5 }}
+                                        >
+                                            Vamos Bater Um Papo?
+                                        </MotionLink>
+                                </div>
+                            </FadeIn>
+                        </div>
+
+                        {/* Marcas com que já trabalhou/teve parceria — placeholders em texto.
+                            TODO: trocar por logotipos reais (SVG/PNG, de preferência em branco/monocromático) */}
+                        <FadeIn className="brands-marquee-wrapper">
+                            <div className="brands-marquee-track">
+                                {[...brandPartners, ...brandPartners].map((brand, index) => (
+                                    <span key={index} className="brand-item">{brand}</span>
+                                ))}
                             </div>
                         </FadeIn>
                     </div>
-
-                    {/* Marcas com que já trabalhou/teve parceria — placeholders em texto.
-                        TODO: trocar por logotipos reais (SVG/PNG, de preferência em branco/monocromático) */}
-                    <FadeIn className="brands-marquee-wrapper">
-                        <div className="brands-marquee-track">
-                            {[...brandPartners, ...brandPartners].map((brand, index) => (
-                                <span key={index} className="brand-item">{brand}</span>
-                            ))}
-                        </div>
-                    </FadeIn>
+                    </GrainGradient>
                 </section>
 
                 <section id="portfolio">
+                    <GrainGradient
+                        width="100%"
+                        height="auto"
+                        className="portfolio-grain-bg"
+                        gradientFrom={theme === 'light' ? '#ffffff' : '#1a1a1a'}
+                        gradientTo={theme === 'light' ? '#e4e8eb' : '#050505'}
+                    >
                     <div className="portfolio-container">
                         <FadeIn className="filter-buttons">
                             <button data-cursor-magnetic className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`} onClick={() => setActiveFilter('all')}>Todos</button>
@@ -263,6 +281,7 @@ const HomePage: React.FC = () => {
                                 ))}
                         </Masonry>
                     </div>
+                    </GrainGradient>
                 </section>
             </>
         </PageTransition>
